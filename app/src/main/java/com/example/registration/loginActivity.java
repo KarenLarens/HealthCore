@@ -22,6 +22,8 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import static java.lang.Thread.sleep;
+
 public class loginActivity extends AppCompatActivity {
 
     TextView lblCrearCuenta;
@@ -32,6 +34,13 @@ public class loginActivity extends AppCompatActivity {
     private ProgressDialog mProgressBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        //tiempo del splash 
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        setTheme(R.style.SplashTheme);
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
         super.onCreate(savedInstanceState);
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
