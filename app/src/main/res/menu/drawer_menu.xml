@@ -5,17 +5,17 @@
 
     <group android:checkableBehavior="single">
         <item android:id="@+id/nav_profile"
-            android:title="Profile"/>
+            android:title="@string/menu_profile"/>
         <item android:id="@+id/nav_code"
-            android:title="QR Code"/>
+            android:title="@string/menu_code"/>
         <item android:id="@+id/nav_centers"
-            android:title="Medical Center"/>
+            android:title="@string/menu_centers"/>
         <item android:id="@+id/nav_contact"
-            android:title="Contact"/>
+            android:title="@string/menu_contact"/>
         <item android:id="@+id/nav_help"
-            android:title="Help"/>
+            android:title="@string/menu_help"/>
         <item android:id="@+id/nav_rate"
-            android:title="Rate us"/>
+            android:title="@string/menu_rate"/>
     </group>
 
 </menu>

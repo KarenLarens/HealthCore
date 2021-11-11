@@ -12,13 +12,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingTop="8dp"
-        android:text="Name"
+        android:text="@string/menu_username"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="User"/> <!-- Email -->
+        android:text="@string/menu_email"/> <!-- Email -->
 
     <ImageView
         android:layout_width="wrap_content"
