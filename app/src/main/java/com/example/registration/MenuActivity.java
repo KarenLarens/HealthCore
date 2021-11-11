@@ -1,13 +1,21 @@
 package com.example.registration;
 
+import android.Manifest;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.widget.Toolbar;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
@@ -18,8 +26,13 @@ import com.example.registration.ui.HelpFragment;
 import com.example.registration.ui.ProfileFragment;
 import com.example.registration.ui.RateFragment;
 import com.google.android.material.navigation.NavigationView;
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
 
 public class MenuActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+
+    private static final int REQUEST_PERMISSION_CALL =100;
+    private static final int REQUEST_PERMISSION_LOCATION =100;
     private DrawerLayout drawer;
 
     @Override
@@ -54,12 +67,25 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
                         new ProfileFragment()).commit();
                 break;
             case R.id.nav_code:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        new CodeFragment()).commit();
+                new IntentIntegrator(this).initiateScan();
                 break;
             case R.id.nav_centers:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        new CentersFragment()).commit();
+                if(Build.VERSION.SDK_INT<Build.VERSION_CODES.M){
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("geo:47.4925,19.0513")));
+                }else{
+                    if ((ContextCompat.checkSelfPermission(MenuActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) &&
+                            (ContextCompat.checkSelfPermission(MenuActivity.this,Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED)){
+                        startActivity(new Intent(Intent.ACTION_VIEW,Uri.parse("geo:47.4925,19.0513")));
+                    }else{
+                        ActivityCompat.requestPermissions(MenuActivity.this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION},REQUEST_PERMISSION_LOCATION);
+                        Toast toast1 = Toast.makeText(getApplicationContext(),"Debes habilitar los permisos de ubicación para usar esta función.",Toast.LENGTH_SHORT);
+                        toast1.show();
+                        if ((ContextCompat.checkSelfPermission(MenuActivity.this,Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) &&
+                                (ContextCompat.checkSelfPermission(MenuActivity.this,Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED)) {
+                            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("geo:47.4925,19.0513")));
+                        }
+                    }
+                }
                 break;
             case R.id.nav_contact:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
