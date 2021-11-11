@@ -95,12 +95,10 @@ public class loginActivity extends AppCompatActivity {
                         editor.commit();
 
                         //redireccionar - intent a login
-                        Intent intent = new Intent(loginActivity.this, MainActivity.class);
+                        Intent intent = new Intent(loginActivity.this, MenuActivity.class);
                         intent.putExtra("password",password);
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(intent);
-
-
                     }else{
                         Toast.makeText(getApplicationContext(), "no se pudo iniciar sesíon, verifique correo/password", Toast.LENGTH_LONG).show();
                     }
@@ -123,7 +121,7 @@ public class loginActivity extends AppCompatActivity {
             //obtener  clave
             SharedPreferences prefs =getSharedPreferences("MyPreferences", Context.MODE_PRIVATE);
             String password_guardada = prefs.getString("url","");
-            Intent intent = new Intent(loginActivity.this, MainActivity.class);
+            Intent intent = new Intent(loginActivity.this,MenuActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
 
