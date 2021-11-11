@@ -34,7 +34,7 @@ public class loginActivity extends AppCompatActivity {
     private ProgressDialog mProgressBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        //tiempo del splash 
+        //tiempo del splash
         try {
             Thread.sleep(2000);
         } catch (InterruptedException e) {
