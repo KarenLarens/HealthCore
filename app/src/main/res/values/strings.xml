@@ -8,8 +8,8 @@
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Ajustes</string>
-    <string name="menu_profile">Perfil</string>
-    <string name="menu_code">"Código QR "</string>
+    <string name="menu_btn">Boton de Emergencia</string>
+    <string name="menu_code">Código QR</string>
     <string name="menu_centers">Centros Médicos</string>
     <string name="menu_contact">Contacto</string>
     <string name="menu_help">Ayuda</string>

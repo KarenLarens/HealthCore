@@ -9,6 +9,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Toast;
 import android.widget.Button;
 
@@ -63,6 +65,16 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
                     new ProfileFragment2()).commit();
             navigationView.setCheckedItem(R.id.nav_profile);
         }
+        ImageView imgFavorite = (ImageView) findViewById(R.id.imgusuario);
+        imgFavorite.setClickable(true);
+        imgFavorite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(MenuActivity.this,
+                        "The favorite list would appear on clicking this icon",
+                        Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     @Override
@@ -70,25 +82,25 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
         switch (item.getItemId()){
             case R.id.nav_profile:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        new ProfileFragment2()).commit();
+                        new ProfileFragment()).commit();
                 break;
             case R.id.nav_code:
                 new IntentIntegrator(this).initiateScan();
                 break;
             case R.id.nav_centers:
                 if(Build.VERSION.SDK_INT<Build.VERSION_CODES.M){
-                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("geo:47.4925,19.0513")));
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("geo:0,0?q=hospital")));
                 }else{
                     if ((ContextCompat.checkSelfPermission(MenuActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) &&
                             (ContextCompat.checkSelfPermission(MenuActivity.this,Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED)){
-                        startActivity(new Intent(Intent.ACTION_VIEW,Uri.parse("geo:47.4925,19.0513")));
+                        startActivity(new Intent(Intent.ACTION_VIEW,Uri.parse("geo:0,0?q=hospital")));
                     }else{
                         ActivityCompat.requestPermissions(MenuActivity.this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION},REQUEST_PERMISSION_LOCATION);
                         Toast toast1 = Toast.makeText(getApplicationContext(),"Debes habilitar los permisos de ubicación para usar esta función.",Toast.LENGTH_SHORT);
                         toast1.show();
                         if ((ContextCompat.checkSelfPermission(MenuActivity.this,Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) &&
                                 (ContextCompat.checkSelfPermission(MenuActivity.this,Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED)) {
-                            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("geo:47.4925,19.0513")));
+                            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("geo:0,0?q=hospital")));
                         }
                     }
                 }
@@ -119,6 +131,11 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
         } else {
             super.onBackPressed();
         }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
     }
 }
 
