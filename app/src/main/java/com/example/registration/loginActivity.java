@@ -103,8 +103,6 @@ public class loginActivity extends AppCompatActivity {
                     }
                 }
             });
-
-
         }
     }
 
@@ -123,7 +121,6 @@ public class loginActivity extends AppCompatActivity {
             Intent intent = new Intent(loginActivity.this,MenuActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
-
         }
         super.onStart();
     }}

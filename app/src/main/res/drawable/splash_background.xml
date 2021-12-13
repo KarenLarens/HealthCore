@@ -3,7 +3,7 @@
     <item android:drawable="@color/splash" />
     <item>
         <bitmap
-            android:gravity="center"
-            android:src="@drawable/icono_v4" />
+            android:gravity="center_horizontal"
+            android:src="@drawable/icono_v4"/>
     </item>
 </layer-list>
