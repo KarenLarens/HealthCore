@@ -5,6 +5,8 @@
 
     <group android:checkableBehavior="single">
         <item android:id="@+id/nav_profile"
+            android:title="@string/menu_profile"/>
+        <item android:id="@+id/nav_boton"
             android:title="@string/menu_btn"/>
         <item android:id="@+id/nav_code"
             android:title="@string/menu_code"/>

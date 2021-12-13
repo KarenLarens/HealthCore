@@ -62,30 +62,26 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
 
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                    new ProfileFragment2()).commit();
+                    new ProfileFragment()).commit();
             navigationView.setCheckedItem(R.id.nav_profile);
         }
-        ImageView imgFavorite = (ImageView) findViewById(R.id.imgusuario);
-        imgFavorite.setClickable(true);
-        imgFavorite.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(MenuActivity.this,
-                        "The favorite list would appear on clicking this icon",
-                        Toast.LENGTH_LONG).show();
-            }
-        });
+
     }
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
-            case R.id.nav_profile:
+            case R.id.nav_boton:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                         new ProfileFragment()).commit();
                 break;
+            case R.id.nav_profile:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                        new ProfileFragment2()).commit();
+                break;
             case R.id.nav_code:
-                new IntentIntegrator(this).initiateScan();
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                        new CodeFragment()).commit();
                 break;
             case R.id.nav_centers:
                 if(Build.VERSION.SDK_INT<Build.VERSION_CODES.M){
@@ -137,6 +133,8 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
     }
+
+
 }
 
 

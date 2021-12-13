@@ -8,6 +8,7 @@
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Ajustes</string>
+    <string name="menu_profile">Perfil</string>
     <string name="menu_btn">Boton de Emergencia</string>
     <string name="menu_code">Código QR</string>
     <string name="menu_centers">Centros Médicos</string>
@@ -49,4 +50,6 @@
     <string name="pregunta_5">¿Puedo consultar información con algún médico?</string>
     <string name="hacer_pregunta">Realiza una pregunta...</string>
     <string name="btn_enviar_pregunta">ENVIAR</string>
+    <string name="scan">Escanear</string>
+
 </resources>

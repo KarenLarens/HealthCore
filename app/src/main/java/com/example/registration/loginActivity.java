@@ -89,18 +89,18 @@ public class loginActivity extends AppCompatActivity {
                         mProgressBar.dismiss();
                         ///guardar clave
                         SharedPreferences prefs = getSharedPreferences("MyPreferences", Context.MODE_PRIVATE);
-                        String password_guardada = prefs.getString("password","");
+                        String password_guardada = prefs.getString("Password","");
                         SharedPreferences.Editor editor= prefs.edit();
-                        editor.putString("password",password);
+                        editor.putString("Password",password);
                         editor.commit();
 
                         //redireccionar - intent a login
                         Intent intent = new Intent(loginActivity.this, MenuActivity.class);
-                        intent.putExtra("password",password);
+                        intent.putExtra("Password",password);
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(intent);
                     }else{
-                        Toast.makeText(getApplicationContext(), "no se pudo iniciar sesíon, verifique correo/password", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "No se pudo iniciar sesíon, verifique correo/password", Toast.LENGTH_LONG).show();
                     }
                 }
             });
@@ -120,7 +120,7 @@ public class loginActivity extends AppCompatActivity {
         if(user!= null){
             //obtener  clave
             SharedPreferences prefs =getSharedPreferences("MyPreferences", Context.MODE_PRIVATE);
-            String password_guardada = prefs.getString("url","");
+            String password_guardada = prefs.getString("Url","");
             Intent intent = new Intent(loginActivity.this,MenuActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
