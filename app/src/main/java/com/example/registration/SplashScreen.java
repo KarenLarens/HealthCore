@@ -4,7 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Bundle;
+
+import com.example.registration.R;
 
 public class SplashScreen extends AppCompatActivity {
     private final int DURACION_SPLASH =3000;

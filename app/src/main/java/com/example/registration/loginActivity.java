@@ -34,16 +34,15 @@ public class loginActivity extends AppCompatActivity {
     private ProgressDialog mProgressBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        //tiempo del splash
+        setContentView(R.layout.activity_splash_screen);
         try {
-            Thread.sleep(2000);
+            Thread.sleep(3000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        setTheme(R.style.SplashTheme);
-        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
+        //AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
         super.onCreate(savedInstanceState);
-        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
+        //AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
         setContentView(R.layout.activity_login);
         txtInputEmail = findViewById(R.id.inputEmail);
         txtInputPassword = findViewById(R.id.inputPassword);
