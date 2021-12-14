@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Registration</string>
+    <string name="app_name">HealthCore</string>
     <string name="title_activity_menu">Menu</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -41,14 +41,31 @@
     <string name="enfermedad_cronica_perfil">Chronic diabetes</string>
     <string name="num_operaciones_perfil">2 surgeries</string>
     <string name="ultima_revision_perfil">Last Medical Visit</string>
-    <string name="titulo_preguntas">General</string>
-    <string name="pregunta_1">How to use the app in an emergency situation?</string>
-    <string name="respuesta_1">If you have an emergency and you have previously filled out your medical record, just go to the home screen, press the red emergency button, verify your situation and a notification is automatically sent to the nearest health center, providing ambulance service to the address entered.</string>
-    <string name="pregunta_2">What is the QR Code used for?</string>
-    <string name="pregunta_3">How do I make my medical record?</string>
-    <string name="pregunta_4">How does the app relate to my health center?</string>
-    <string name="pregunta_5">Can I consult a physician for information?</string>
+    <string-array name="Preguntas">
+        <item>How to use the app in an emergency situation?</item>
+        <item>What is the QR Code used for?</item>
+        <item>How do I make my medical record?</item>
+        <item>How does the app relate to my health center?</item>
+        <item>Can I consult a physician for information?</item>
+    </string-array>
+    <string-array name="Respuesta1">
+        <item>If you have an emergency and you have previously filled out your medical record, just go to the home screen, press the red emergency button, verify your situation and a notification is automatically sent to the nearest health center, providing ambulance service to the address entered.</item>
+    </string-array>
+    <string-array name="Respuesta2">
+        <item>El código QR permite almacenar tu información médica, en caso de que presentes un accidente, este puede ser escaneado por alguien más para brindarte servicios de forma más rápida y eficaz</item>
+    </string-array>
+    <string-array name="Respuesta3">
+        <item>En el apartado de tu perfil, podrás modificar tu expediente contestando las preguntas disponibles</item>
+    </string-array>
+    <string-array name="Respuesta4">
+        <item>Al presionar el botón de emergencia que tienes disponible en la app, este manda una alerta a tu centro de salud, permitiendo brindarte servicio de ambulancia para que tu caso pueda ser atendido rápidamente</item>
+    </string-array>
+    <string-array name="Respuesta5">
+        <item>La app no está enfocada en brindarte servicio directo con algún médico en particular, sino que permite mejorar las emergencias en los centros de salud y sociedad</item>
+    </string-array>
     <string name="hacer_pregunta">Ask a question...</string>
     <string name="btn_enviar_pregunta">SEND</string>
     <string name="scan">Scan</string>
+    <string name="textViewPreguntas">Preguntas más frecuentes de la app</string>
+    <string name="textViewRespuestas">Answers</string>
 </resources>

@@ -30,6 +30,7 @@ public class loginActivity extends AppCompatActivity {
     EditText txtInputEmail, txtInputPassword;
     Button btnLogin;
     FirebaseAuth mAuth;
+    public static String correo;
 
     private ProgressDialog mProgressBar;
     @Override
@@ -86,6 +87,10 @@ public class loginActivity extends AppCompatActivity {
                     if (task.isSuccessful()){
                         //ocultar progressBar
                         mProgressBar.dismiss();
+
+                        //Para rating
+                        correo = email;
+
                         ///guardar clave
                         SharedPreferences prefs = getSharedPreferences("MyPreferences", Context.MODE_PRIVATE);
                         String password_guardada = prefs.getString("Password","");
@@ -99,7 +104,7 @@ public class loginActivity extends AppCompatActivity {
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(intent);
                     }else{
-                        Toast.makeText(getApplicationContext(), "No se pudo iniciar sesíon, verifique correo/password", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "No se pudo iniciar sesíón, verifique correo/password", Toast.LENGTH_LONG).show();
                     }
                 }
             });
