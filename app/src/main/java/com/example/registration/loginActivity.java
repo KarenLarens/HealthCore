@@ -33,6 +33,12 @@ public class loginActivity extends AppCompatActivity implements GestureDetector.
     }
 
     @Override
+    public boolean onTouchEvent (MotionEvent event) {
+        this.gestureDetector.onTouchEvent(event);
+        return super.onTouchEvent(event);
+    }
+
+    @Override
     public boolean onDoubleTap(MotionEvent motionEvent) {
         Intent intent = new Intent(loginActivity.this, RegisterActivity.class);
         startActivity(intent);
@@ -41,8 +47,6 @@ public class loginActivity extends AppCompatActivity implements GestureDetector.
 
     @Override
     public boolean onDoubleTapEvent(MotionEvent motionEvent) {
-        Intent intent = new Intent(loginActivity.this, ContactFragment.class);
-        startActivity(intent);
         return false;
     }
 
