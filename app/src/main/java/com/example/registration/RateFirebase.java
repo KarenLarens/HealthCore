@@ -1,7 +1,7 @@
 package com.example.registration;
 
 public class RateFirebase {
-    private String comentario, correo;
+    private String comentario;
     private Float estrellas;
 
     public RateFirebase() {
@@ -23,11 +23,4 @@ public class RateFirebase {
         this.estrellas = estrellas;
     }
 
-    public String getCorreo() {
-        return correo;
-    }
-
-    public void setCorreo(String correo) {
-        this.correo = correo;
-    }
 }

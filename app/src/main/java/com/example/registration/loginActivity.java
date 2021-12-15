@@ -89,13 +89,19 @@ public class loginActivity extends AppCompatActivity {
                         mProgressBar.dismiss();
 
                         //Para rating
-                        correo = email;
 
                         ///guardar clave
                         SharedPreferences prefs = getSharedPreferences("MyPreferences", Context.MODE_PRIVATE);
                         String password_guardada = prefs.getString("Password","");
                         SharedPreferences.Editor editor= prefs.edit();
                         editor.putString("Password",password);
+                        editor.commit();
+
+                        //guardar correo
+                        SharedPreferences prefs2 = getSharedPreferences("MyPreferences", Context.MODE_PRIVATE);
+                        String email_guardado = prefs.getString("Correo","");
+                        SharedPreferences.Editor editor2= prefs2.edit();
+                        editor.putString("Correo",email);
                         editor.commit();
 
                         //redireccionar - intent a login
