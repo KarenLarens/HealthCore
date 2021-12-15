@@ -38,7 +38,6 @@ public class ContactFragment extends Fragment {
                 startActivity(intent);
             }
         });
-
         return view;
     }
 }
