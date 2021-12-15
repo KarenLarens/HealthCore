@@ -2,6 +2,7 @@ package com.example.registration;
 
 public class PerfilFirebase{
     private String Nombre,ApePat,ApeMat,Edad,Sexo;
+    private String Estatura,Peso,Alergias,TSangre;
 
     public PerfilFirebase() {
     }
@@ -44,5 +45,37 @@ public class PerfilFirebase{
 
     public void setSexo(String sexo) {
         Sexo = sexo;
+    }
+
+    public String getEstatura() {
+        return Estatura;
+    }
+
+    public void setEstatura(String estatura) {
+        Estatura = estatura;
+    }
+
+    public String getPeso() {
+        return Peso;
+    }
+
+    public void setPeso(String peso) {
+        Peso = peso;
+    }
+
+    public String getAlergias() {
+        return Alergias;
+    }
+
+    public void setAlergias(String alergias) {
+        Alergias = alergias;
+    }
+
+    public String getTSangre() {
+        return TSangre;
+    }
+
+    public void setTSangre(String TSangre) {
+        this.TSangre = TSangre;
     }
 }

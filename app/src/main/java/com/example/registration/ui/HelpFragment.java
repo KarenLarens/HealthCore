@@ -28,7 +28,7 @@ public class HelpFragment extends Fragment {
     private Spinner spinnerPreguntas;
     private ListView ListViewRespuestas;
     EditText duda;
-    DatabaseReference reference,reference2;
+    DatabaseReference reference;
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
     @Nullable
