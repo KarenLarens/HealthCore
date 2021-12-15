@@ -10,6 +10,8 @@
     android:theme="@style/ThemeOverlay.AppCompat.Dark"
     tools:context="com.example.registration.MenuActivity">
 
+    <!-- Email -->
+
     <TextView
         android:id="@+id/nav_user"
         android:layout_width="wrap_content"
@@ -17,12 +19,6 @@
         android:paddingTop="8dp"
         android:text="@string/menu_username"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
-
-    <TextView
-        android:id="@+id/nav_email"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/menu_email" /> <!-- Email -->
 
     <ImageButton
         android:id="@+id/imgusuario"

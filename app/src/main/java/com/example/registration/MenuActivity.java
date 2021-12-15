@@ -56,7 +56,6 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
                     new ProfileFragment()).commit();
             navigationView.setCheckedItem(R.id.nav_profile);
         }
-
     }
 
     @Override

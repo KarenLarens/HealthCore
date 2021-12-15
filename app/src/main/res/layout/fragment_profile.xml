@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#92CAE5E6"
-    tools:context=".ui.ProfileFragment">
+    tools:context="com.example.registration.ui.ProfileFragment">
 
     <TextView
         android:layout_width="wrap_content"
@@ -19,10 +19,9 @@
         android:src="@drawable/boton200a166"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView4"
-        app:layout_constraintVertical_bias="0.047" />
+        app:layout_constraintVertical_bias="0.088" />
 
     <TextView
         android:id="@+id/textView4"

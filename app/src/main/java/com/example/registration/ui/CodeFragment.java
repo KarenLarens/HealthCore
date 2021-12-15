@@ -47,7 +47,7 @@ import java.io.IOException;
 public class CodeFragment extends Fragment {
     ImageView ivOutput;
 
-    DatabaseReference reference,reference2;
+    DatabaseReference reference;
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     String UID= user.getUid();
     Button btn;
