@@ -41,10 +41,6 @@ public class HelpFragment extends Fragment {
         ArrayAdapter spinAdapter = ArrayAdapter.createFromResource(getActivity(), R.array.Preguntas, android.R.layout.simple_spinner_item);
         spinnerPreguntas.setAdapter(spinAdapter);
 
-        duda = (EditText) view.findViewById(R.id.textInputEditTextPregunta);
-        Button submit = (Button) view.findViewById(R.id.buttonRealizaPregunta);
-        reference = FirebaseDatabase.getInstance().getReference().child("HelpFirebase");
-
         spinnerPreguntas.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> lista, View view, int pos, long id) {
@@ -75,6 +71,10 @@ public class HelpFragment extends Fragment {
 
             }
         });
+
+        duda = (EditText) view.findViewById(R.id.textInputEditTextPregunta);
+        Button submit = (Button) view.findViewById(R.id.buttonRealizaPregunta);
+        reference = FirebaseDatabase.getInstance().getReference().child("HelpFirebase");
 
         submit.setOnClickListener(new View.OnClickListener() {
             @Override

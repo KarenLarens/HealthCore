@@ -115,6 +115,7 @@
         android:layout_height="38dp"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
+        android:layout_marginEnd="156dp"
         android:fontFamily="sans-serif-light"
         android:hint="Ingrese su edad en número"
         android:textSize="12sp"
@@ -134,8 +135,8 @@
         android:layout_below="@+id/textView25"
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="36dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="40dp"
         android:fontFamily="sans-serif-condensed-medium"
         android:text="Sexo:"
         app:layout_constraintStart_toStartOf="parent"
@@ -153,8 +154,10 @@
         android:textSize="12sp"
         android:textStyle="bold"
         app:layout_constraintBaseline_toBaselineOf="@+id/textView26"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="51dp">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/textView26"
+        tools:ignore="MissingConstraints">
 
     </androidx.appcompat.widget.AppCompatEditText>
 
@@ -164,7 +167,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/textView24"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="20dp"
+        android:layout_marginStart="24dp"
         android:layout_marginTop="32dp"
         android:fontFamily="sans-serif-condensed-medium"
         android:text="Edad:"
@@ -211,7 +214,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="24dp"
         android:layout_marginTop="12dp"
         android:fontFamily="sans-serif-condensed-medium"
         android:text="Estatura:"
@@ -224,8 +227,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginStart="44dp"
+        android:layout_marginTop="20dp"
         android:fontFamily="sans-serif-condensed-medium"
         android:text="Peso:"
         app:layout_constraintStart_toStartOf="parent"
@@ -241,7 +244,7 @@
         android:textSize="12sp"
         app:layout_constraintBaseline_toBaselineOf="@+id/textView11"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.023"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/textView28" />
 
     <EditText
@@ -254,7 +257,7 @@
         android:textSize="12sp"
         app:layout_constraintBaseline_toBaselineOf="@+id/textView20"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.029"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/textView28" />
 
     <TextView
@@ -264,7 +267,7 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
         android:layout_marginStart="12dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="20dp"
         android:fontFamily="sans-serif-condensed-medium"
         android:text="Tipo de sangre:"
         app:layout_constraintStart_toStartOf="parent"
@@ -280,7 +283,7 @@
         android:textSize="12sp"
         app:layout_constraintBaseline_toBaselineOf="@+id/textView29"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.191"
+        app:layout_constraintHorizontal_bias="0.131"
         app:layout_constraintStart_toEndOf="@+id/textView28" />
 
     <TextView
@@ -289,8 +292,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="20dp"
         android:fontFamily="sans-serif-condensed-medium"
         android:text="Alergias:"
         app:layout_constraintStart_toStartOf="parent"
@@ -300,13 +303,14 @@
         android:id="@+id/EstaturaET"
         android:layout_width="154dp"
         android:layout_height="34dp"
+        android:layout_marginEnd="184dp"
         android:ems="10"
         android:hint="Ingrese su altura en cm"
         android:inputType="text"
         android:textSize="12sp"
         app:layout_constraintBaseline_toBaselineOf="@+id/textView28"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.029"
+        app:layout_constraintHorizontal_bias="0.285"
         app:layout_constraintStart_toEndOf="@+id/textView28" />
 
     <androidx.appcompat.widget.AppCompatEditText

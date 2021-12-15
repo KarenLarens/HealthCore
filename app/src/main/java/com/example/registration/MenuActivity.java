@@ -8,31 +8,21 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.Toast;
-import android.widget.Button;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.widget.Toolbar;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-
-import com.example.registration.ui.CentersFragment;
 import com.example.registration.ui.CodeFragment;
 import com.example.registration.ui.ContactFragment;
 import com.example.registration.ui.HelpFragment;
 import com.example.registration.ui.ProfileFragment;
 import com.example.registration.ui.RateFragment;
 import com.google.android.material.navigation.NavigationView;
-import com.google.zxing.integration.android.IntentIntegrator;
-import com.google.zxing.integration.android.IntentResult;
 import com.example.registration.ui.ProfileFragment2;
 
 public class MenuActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -40,10 +30,11 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
     private static final int REQUEST_PERMISSION_CALL =100;
     private static final int REQUEST_PERMISSION_LOCATION =100;
     private DrawerLayout drawer;
-    Button btn_emer;
+
 
     @SuppressLint("WrongViewCast")
     @Override
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.menu);
@@ -133,8 +124,6 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
     }
-
-
 }
 
 
