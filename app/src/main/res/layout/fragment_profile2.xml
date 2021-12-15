@@ -48,7 +48,7 @@
         app:layout_constraintVertical_bias="0.019" />
 
     <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/editText2"
+        android:id="@+id/ApePatET"
         android:layout_width="270dp"
         android:layout_height="35dp"
         android:layout_marginTop="8dp"
@@ -60,13 +60,13 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.421"
         app:layout_constraintStart_toEndOf="@+id/textView23"
-        app:layout_constraintTop_toBottomOf="@+id/appCompatEditText2"
+        app:layout_constraintTop_toBottomOf="@+id/NombreET"
         tools:ignore="MissingConstraints">
 
     </androidx.appcompat.widget.AppCompatEditText>
 
     <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/editText3"
+        android:id="@+id/ApeMatET"
         android:layout_width="272dp"
         android:layout_height="32dp"
         android:layout_marginTop="4dp"
@@ -78,13 +78,13 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.277"
         app:layout_constraintStart_toEndOf="@+id/textView24"
-        app:layout_constraintTop_toBottomOf="@+id/editText2"
+        app:layout_constraintTop_toBottomOf="@+id/ApePatET"
         tools:ignore="MissingConstraints">
 
     </androidx.appcompat.widget.AppCompatEditText>
 
     <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/editText4"
+        android:id="@+id/AgeET"
         android:layout_width="352dp"
         android:layout_height="35dp"
         android:layout_centerHorizontal="true"
@@ -97,13 +97,13 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.25"
         app:layout_constraintStart_toEndOf="@+id/textView25"
-        app:layout_constraintTop_toBottomOf="@+id/editText3"
+        app:layout_constraintTop_toBottomOf="@+id/ApeMatET"
         tools:ignore="MissingConstraints">
 
     </androidx.appcompat.widget.AppCompatEditText>
 
     <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/editText5"
+        android:id="@+id/UserET"
         android:layout_width="325dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
@@ -119,7 +119,7 @@
     </androidx.appcompat.widget.AppCompatEditText>
 
     <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/editText6"
+        android:id="@+id/EmailT"
         android:layout_width="325dp"
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif-light"
@@ -129,13 +129,13 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.291"
         app:layout_constraintStart_toEndOf="@+id/textView29"
-        app:layout_constraintTop_toBottomOf="@+id/editText5"
+        app:layout_constraintTop_toBottomOf="@+id/UserET"
         tools:ignore="MissingConstraints">
 
     </androidx.appcompat.widget.AppCompatEditText>
 
     <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/editText7"
+        android:id="@+id/PassET"
         android:layout_width="306dp"
         android:layout_height="32dp"
         android:layout_marginStart="12dp"
@@ -148,7 +148,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/textView30"
-        app:layout_constraintTop_toBottomOf="@+id/editText6"
+        app:layout_constraintTop_toBottomOf="@+id/EmailT"
         tools:ignore="MissingConstraints">
 
     </androidx.appcompat.widget.AppCompatEditText>
@@ -295,7 +295,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView29" />
 
     <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/appCompatEditText2"
+        android:id="@+id/NombreET"
         android:layout_width="325dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="28dp"
@@ -312,7 +312,7 @@
     </androidx.appcompat.widget.AppCompatEditText>
 
     <Switch
-        android:id="@+id/switch1"
+        android:id="@+id/GenreSwitch"
         android:layout_width="105dp"
         android:layout_height="27dp"
         android:layout_alignParentStart="true"
@@ -325,7 +325,7 @@
         android:textSize="12sp"
         android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/textView26"
-        app:layout_constraintTop_toBottomOf="@+id/editText4"
+        app:layout_constraintTop_toBottomOf="@+id/AgeET"
         tools:ignore="MissingConstraints,UseSwitchCompatOrMaterialXml" />
 
     <TextView
@@ -344,20 +344,20 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/switch1"
-        app:layout_constraintTop_toBottomOf="@+id/editText4"
+        app:layout_constraintStart_toEndOf="@+id/GenreSwitch"
+        app:layout_constraintTop_toBottomOf="@+id/AgeET"
         tools:ignore="MissingConstraints" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/BtnActualizar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Button"
+        android:text="Actualizar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText7"
+        app:layout_constraintTop_toBottomOf="@+id/PassET"
         app:layout_constraintVertical_bias="0.394" />
 
 
