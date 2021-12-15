@@ -13,6 +13,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.registration.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -20,9 +22,13 @@ import com.google.firebase.database.FirebaseDatabase;
 public class ProfileFragment2 extends Fragment {
 
     DatabaseReference reference;
+    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     Switch Genre;
     EditText NombreET,ApePatET,ApeMatET,AgeET, UserET,EmailET,PassET;
     Button submit;
+
+    //Datos de sesión activa
+    String UID = user.getUid();
 
 
     @Nullable
@@ -36,9 +42,6 @@ public class ProfileFragment2 extends Fragment {
         ApePatET= (EditText) view.findViewById(R.id.ApePatET);
         ApeMatET= (EditText) view.findViewById(R.id.ApeMatET);
         AgeET= (EditText) view.findViewById(R.id.AgeET);
-        UserET= (EditText) view.findViewById(R.id.UserET);
-        EmailET= (EditText) view.findViewById(R.id.EmailT);
-        PassET= (EditText) view.findViewById(R.id.PassET);
 
         submit = (Button) view.findViewById(R.id.BtnActualizar);
 
@@ -48,6 +51,7 @@ public class ProfileFragment2 extends Fragment {
 
     public void MostrarDatos(){
         reference= FirebaseDatabase.getInstance().getReference().child("Perfil");
+
 
     }
 

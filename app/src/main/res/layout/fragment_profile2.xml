@@ -45,119 +45,13 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout"
-        app:layout_constraintVertical_bias="0.019" />
-
-    <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/ApePatET"
-        android:layout_width="270dp"
-        android:layout_height="35dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:fontFamily="sans-serif-light"
-        android:hint="Ingrese su primer apellido"
-        android:textSize="12sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.421"
-        app:layout_constraintStart_toEndOf="@+id/textView23"
-        app:layout_constraintTop_toBottomOf="@+id/NombreET"
-        tools:ignore="MissingConstraints">
-
-    </androidx.appcompat.widget.AppCompatEditText>
-
-    <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/ApeMatET"
-        android:layout_width="272dp"
-        android:layout_height="32dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="4dp"
-        android:fontFamily="sans-serif-light"
-        android:hint="Ingrese su segundo apellido"
-        android:textSize="12sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.277"
-        app:layout_constraintStart_toEndOf="@+id/textView24"
-        app:layout_constraintTop_toBottomOf="@+id/ApePatET"
-        tools:ignore="MissingConstraints">
-
-    </androidx.appcompat.widget.AppCompatEditText>
-
-    <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/AgeET"
-        android:layout_width="352dp"
-        android:layout_height="35dp"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:layout_marginTop="4dp"
-        android:fontFamily="sans-serif-light"
-        android:hint="Ingrese su edad en número"
-        android:textSize="12sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.25"
-        app:layout_constraintStart_toEndOf="@+id/textView25"
-        app:layout_constraintTop_toBottomOf="@+id/ApeMatET"
-        tools:ignore="MissingConstraints">
-
-    </androidx.appcompat.widget.AppCompatEditText>
-
-    <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/UserET"
-        android:layout_width="325dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="8dp"
-        android:fontFamily="sans-serif-light"
-        android:hint="Ingrese un nuevo nombre de usuario"
-        android:textSize="12sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@+id/textView28"
-        app:layout_constraintTop_toBottomOf="@+id/textView27"
-        tools:ignore="MissingConstraints">
-
-    </androidx.appcompat.widget.AppCompatEditText>
-
-    <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/EmailT"
-        android:layout_width="325dp"
-        android:layout_height="wrap_content"
-        android:fontFamily="sans-serif-light"
-        android:hint="Ingrese un correo electrónico"
-        android:textSize="12sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.291"
-        app:layout_constraintStart_toEndOf="@+id/textView29"
-        app:layout_constraintTop_toBottomOf="@+id/UserET"
-        tools:ignore="MissingConstraints">
-
-    </androidx.appcompat.widget.AppCompatEditText>
-
-    <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/PassET"
-        android:layout_width="306dp"
-        android:layout_height="32dp"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="4dp"
-        android:fontFamily="sans-serif-light"
-        android:hint="Ingrese una contraseña"
-        android:password="true"
-        android:textSize="12sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/textView30"
-        app:layout_constraintTop_toBottomOf="@+id/EmailT"
-        tools:ignore="MissingConstraints">
-
-    </androidx.appcompat.widget.AppCompatEditText>
+        app:layout_constraintVertical_bias="0.007" />
 
     <TextView
         android:id="@+id/textViewDatosPersonales"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
+        android:layout_marginBottom="24dp"
         android:fontFamily="cursive"
         android:lineSpacingExtra="8sp"
         android:text="Datos Personales"
@@ -168,8 +62,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.056"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView5"
-        app:layout_constraintVertical_bias="0.045" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
 
     <TextView
         android:id="@+id/textView22"
@@ -177,38 +71,63 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/textViewDatosPersonales"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
         android:fontFamily="sans-serif-condensed-medium"
         android:text="Nombre:"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView5" />
 
-    <TextView
-        android:id="@+id/textView23"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textView22"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:fontFamily="sans-serif-condensed-medium"
-        android:text="Apellido Paterno:"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView22" />
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/ApeMatET"
+        android:layout_width="264dp"
+        android:layout_height="30dp"
+        android:layout_marginEnd="4dp"
+        android:fontFamily="sans-serif-light"
+        android:hint="Ingrese su segundo apellido"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        app:layout_constraintBaseline_toBaselineOf="@+id/textView24"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.071"
+        app:layout_constraintStart_toEndOf="@+id/textView24"
+        tools:ignore="MissingConstraints">
 
-    <TextView
-        android:id="@+id/textView24"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textView23"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="24dp"
-        android:fontFamily="sans-serif-condensed-medium"
-        android:text="Apellido Materno:"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView23" />
+    </androidx.appcompat.widget.AppCompatEditText>
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/AgeET"
+        android:layout_width="186dp"
+        android:layout_height="38dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:fontFamily="sans-serif-light"
+        android:hint="Ingrese su edad en número"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        app:layout_constraintBaseline_toBaselineOf="@+id/textView25"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/textView25"
+        tools:ignore="MissingConstraints">
+
+    </androidx.appcompat.widget.AppCompatEditText>
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/NombreET"
+        android:layout_width="315dp"
+        android:layout_height="39dp"
+        android:fontFamily="sans-serif-light"
+        android:hint="Ingrese su nombre (s)"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        app:layout_constraintBaseline_toBaselineOf="@+id/textView22"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/textView22"
+        tools:ignore="MissingConstraints">
+
+    </androidx.appcompat.widget.AppCompatEditText>
 
     <TextView
         android:id="@+id/textView25"
@@ -216,12 +135,28 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/textView24"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="24dp"
         android:fontFamily="sans-serif-condensed-medium"
         android:text="Edad:"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView24" />
+
+    <Switch
+        android:id="@+id/GenreSwitch"
+        android:layout_width="105dp"
+        android:layout_height="27dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="8dp"
+        android:fontFamily="sans-serif-light"
+        android:text="Masculino"
+        android:textColor="#7E7C7C"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        app:layout_constraintBaseline_toBaselineOf="@+id/textView26"
+        app:layout_constraintStart_toEndOf="@+id/textView26"
+        tools:ignore="MissingConstraints,UseSwitchCompatOrMaterialXml" />
 
     <TextView
         android:id="@+id/textView26"
@@ -230,12 +165,31 @@
         android:layout_below="@+id/textView25"
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
         android:fontFamily="sans-serif-condensed-medium"
         android:text="Sexo:"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView25" />
+
+    <TextView
+        android:id="@+id/textView31"
+        android:layout_width="66dp"
+        android:layout_height="28dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:fontFamily="sans-serif-light"
+        android:lineSpacingExtra="8sp"
+        android:text="Femenino"
+        android:textAllCaps="false"
+        android:textColor="#7E7C7C"
+        android:textSize="13sp"
+        android:textStyle="bold"
+        app:layout_constraintBaseline_toBaselineOf="@+id/GenreSwitch"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/GenreSwitch"
+        tools:ignore="MissingConstraints" />
 
     <TextView
         android:id="@+id/textView27"
@@ -243,15 +197,15 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="36dp"
         android:fontFamily="cursive"
         android:lineSpacingExtra="8sp"
-        android:text="Mi Cuenta"
+        android:text="Mi Salud"
         android:textColor="#14734A"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.047"
+        app:layout_constraintHorizontal_bias="0.049"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView26" />
 
@@ -262,11 +216,50 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="12dp"
         android:fontFamily="sans-serif-condensed-medium"
-        android:text="Usuario:"
+        android:text="Estatura:"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView27" />
+
+    <TextView
+        android:id="@+id/textView11"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:fontFamily="sans-serif-condensed-medium"
+        android:text="Peso:"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView28" />
+
+    <EditText
+        android:id="@+id/editTextNumberSigned6"
+        android:layout_width="154dp"
+        android:layout_height="34dp"
+        android:ems="10"
+        android:hint="Ingresa tu peso en Kg"
+        android:inputType="numberSigned"
+        android:textSize="12sp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/textView11"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.023"
+        app:layout_constraintStart_toEndOf="@+id/textView28" />
+
+    <EditText
+        android:id="@+id/editTextNumberSigned7"
+        android:layout_width="154dp"
+        android:layout_height="34dp"
+        android:ems="10"
+        android:hint="Ingresa tu tipo de sangre"
+        android:inputType="numberSigned"
+        android:textSize="12sp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/textView20"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.029"
+        app:layout_constraintStart_toEndOf="@+id/textView28" />
 
     <TextView
         android:id="@+id/textView29"
@@ -274,91 +267,107 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="28dp"
         android:fontFamily="sans-serif-condensed-medium"
-        android:text="Correo:"
+        android:text="Tipo de sangre:"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView28" />
+        app:layout_constraintTop_toBottomOf="@+id/textView20" />
+
+    <EditText
+        android:id="@+id/editTextNumberSigned2"
+        android:layout_width="154dp"
+        android:layout_height="34dp"
+        android:ems="10"
+        android:hint="Ingresa tu tipo de sangre"
+        android:inputType="numberSigned"
+        android:textSize="12sp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/textView29"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.191"
+        app:layout_constraintStart_toEndOf="@+id/textView28" />
 
     <TextView
-        android:id="@+id/textView30"
+        android:id="@+id/textView20"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="28dp"
         android:fontFamily="sans-serif-condensed-medium"
-        android:text="Contraseña:"
+        android:text="Alergias:"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView29" />
+        app:layout_constraintTop_toBottomOf="@+id/textView11" />
+
+    <EditText
+        android:id="@+id/editTextNumberSigned"
+        android:layout_width="154dp"
+        android:layout_height="34dp"
+        android:ems="10"
+        android:hint="Ingresa tu altura en cm"
+        android:inputType="numberSigned"
+        android:textSize="12sp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/textView28"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.029"
+        app:layout_constraintStart_toEndOf="@+id/textView28" />
 
     <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/NombreET"
-        android:layout_width="325dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
+        android:id="@+id/ApePatET"
+        android:layout_width="263dp"
+        android:layout_height="32dp"
+        android:layout_marginEnd="8dp"
         android:fontFamily="sans-serif-light"
-        android:hint="Ingrese su nombre (s)"
+        android:hint="Ingrese su primer apellido"
         android:textSize="12sp"
         android:textStyle="bold"
+        app:layout_constraintBaseline_toBaselineOf="@+id/textView23"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.36"
-        app:layout_constraintStart_toEndOf="@+id/textView22"
-        app:layout_constraintTop_toBottomOf="@+id/imageView5"
+        app:layout_constraintHorizontal_bias="0.25"
+        app:layout_constraintStart_toEndOf="@+id/textView23"
         tools:ignore="MissingConstraints">
 
     </androidx.appcompat.widget.AppCompatEditText>
 
-    <Switch
-        android:id="@+id/GenreSwitch"
-        android:layout_width="105dp"
-        android:layout_height="27dp"
+    <TextView
+        android:id="@+id/textView24"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView23"
         android:layout_alignParentStart="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="8dp"
-        android:fontFamily="sans-serif-light"
-        android:text="Masculino"
-        android:textColor="#7E7C7C"
-        android:textSize="12sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@+id/textView26"
-        app:layout_constraintTop_toBottomOf="@+id/AgeET"
-        tools:ignore="MissingConstraints,UseSwitchCompatOrMaterialXml" />
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:fontFamily="sans-serif-condensed-medium"
+        android:text="Apellido Materno:"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView23" />
 
     <TextView
-        android:id="@+id/textView31"
-        android:layout_width="66dp"
-        android:layout_height="28dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="16dp"
-        android:fontFamily="sans-serif-light"
-        android:lineSpacingExtra="8sp"
-        android:text="Femenino"
-        android:textAllCaps="false"
-        android:textColor="#7E7C7C"
-        android:textSize="13sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/GenreSwitch"
-        app:layout_constraintTop_toBottomOf="@+id/AgeET"
-        tools:ignore="MissingConstraints" />
+        android:id="@+id/textView23"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView22"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="28dp"
+        android:fontFamily="sans-serif-condensed-medium"
+        android:text="Apellido Paterno:"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView22" />
 
     <Button
         android:id="@+id/BtnActualizar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
         android:text="Actualizar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/PassET"
-        app:layout_constraintVertical_bias="0.394" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextNumberSigned2"
+        app:layout_constraintVertical_bias="0.433" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
