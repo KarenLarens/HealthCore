@@ -27,7 +27,7 @@
             android:layout_centerHorizontal="true"
             android:layout_weight="1"
             android:fontFamily="serif"
-            android:text="PERFIL"
+            android:text="@string/perfil"
             android:textAlignment="center"
             android:textColor="#7ACFC7"
             android:textSize="34sp"
@@ -56,7 +56,7 @@
         android:layout_marginBottom="24dp"
         android:fontFamily="cursive"
         android:lineSpacingExtra="8sp"
-        android:text="Datos Personales"
+        android:text="@string/datospersonales"
         android:textColor="#14734A"
         android:textSize="20sp"
         android:textStyle="bold"
@@ -73,10 +73,10 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/textViewDatosPersonales"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="20dp"
+        android:layout_marginStart="12dp"
         android:layout_marginTop="20dp"
         android:fontFamily="sans-serif-condensed-medium"
-        android:text="Nombre:"
+        android:text="@string/nombre"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView5" />
 
@@ -86,7 +86,7 @@
         android:layout_height="32dp"
         android:layout_marginEnd="4dp"
         android:fontFamily="sans-serif-light"
-        android:hint="Ingrese su segundo apellido"
+        android:hint="@string/ingresarapemat"
         android:textSize="12sp"
         android:textStyle="bold"
         app:layout_constraintBaseline_toBaselineOf="@+id/textView24"
@@ -103,10 +103,10 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/textView23"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="36dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="28dp"
         android:fontFamily="sans-serif-condensed-medium"
-        android:text="Apellido Materno:"
+        android:text="@string/apemat"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView23" />
 
@@ -118,12 +118,12 @@
         android:layout_centerVertical="true"
         android:layout_marginEnd="156dp"
         android:fontFamily="sans-serif-light"
-        android:hint="Ingrese su edad en número"
+        android:hint="@string/ingreedad"
         android:textSize="12sp"
         android:textStyle="bold"
         app:layout_constraintBaseline_toBaselineOf="@+id/textView25"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.636"
         app:layout_constraintStart_toEndOf="@+id/textView25"
         tools:ignore="MissingConstraints">
 
@@ -136,10 +136,10 @@
         android:layout_below="@+id/textView25"
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="36dp"
         android:fontFamily="sans-serif-condensed-medium"
-        android:text="Sexo:"
+        android:text="@string/sexo"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView25" />
 
@@ -150,13 +150,13 @@
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:fontFamily="sans-serif-light"
-        android:hint="Ingrese su sexo"
+        android:hint="@string/ingresex"
         android:inputType="text"
         android:textSize="12sp"
         android:textStyle="bold"
         app:layout_constraintBaseline_toBaselineOf="@+id/textView26"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.073"
         app:layout_constraintStart_toEndOf="@+id/textView26"
         tools:ignore="MissingConstraints">
 
@@ -168,10 +168,10 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/textView24"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="36dp"
         android:fontFamily="sans-serif-condensed-medium"
-        android:text="Edad:"
+        android:text="@string/edad"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView24" />
 
@@ -180,7 +180,7 @@
         android:layout_width="315dp"
         android:layout_height="39dp"
         android:fontFamily="sans-serif-light"
-        android:hint="Ingrese su nombre (s)"
+        android:hint="@string/ingresenombre"
         android:textSize="12sp"
         android:textStyle="bold"
         app:layout_constraintBaseline_toBaselineOf="@+id/textView22"
@@ -200,7 +200,7 @@
         android:layout_marginTop="36dp"
         android:fontFamily="cursive"
         android:lineSpacingExtra="8sp"
-        android:text="Mi Salud"
+        android:text="@string/misalud"
         android:textColor="#14734A"
         android:textSize="20sp"
         android:textStyle="bold"
@@ -215,10 +215,10 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="24dp"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="12dp"
         android:fontFamily="sans-serif-condensed-medium"
-        android:text="Estatura:"
+        android:text="@string/estatura"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView27" />
 
@@ -228,10 +228,10 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="44dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="28dp"
         android:fontFamily="sans-serif-condensed-medium"
-        android:text="Peso:"
+        android:text="@string/peso"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView28" />
 
@@ -240,7 +240,7 @@
         android:layout_width="154dp"
         android:layout_height="34dp"
         android:ems="10"
-        android:hint="Ingrese su peso en Kg"
+        android:hint="@string/ingpeso"
         android:inputType="text"
         android:textSize="12sp"
         app:layout_constraintBaseline_toBaselineOf="@+id/textView11"
@@ -253,12 +253,12 @@
         android:layout_width="197dp"
         android:layout_height="36dp"
         android:ems="10"
-        android:hint="Ingrese las alergías que posee"
+        android:hint="@string/ingrealer"
         android:inputType="text"
         android:textSize="12sp"
         app:layout_constraintBaseline_toBaselineOf="@+id/textView20"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.069"
         app:layout_constraintStart_toEndOf="@+id/textView28" />
 
     <TextView
@@ -267,10 +267,10 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="12dp"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
         android:fontFamily="sans-serif-condensed-medium"
-        android:text="Tipo de sangre:"
+        android:text="@string/tipsang"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView20" />
 
@@ -279,12 +279,12 @@
         android:layout_width="154dp"
         android:layout_height="34dp"
         android:ems="10"
-        android:hint="Ingrese su tipo de sangre"
+        android:hint="@string/ingretisan"
         android:inputType="text"
         android:textSize="12sp"
         app:layout_constraintBaseline_toBaselineOf="@+id/textView29"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.131"
+        app:layout_constraintHorizontal_bias="0.247"
         app:layout_constraintStart_toEndOf="@+id/textView28" />
 
     <TextView
@@ -293,10 +293,10 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="28dp"
         android:fontFamily="sans-serif-condensed-medium"
-        android:text="Alergias:"
+        android:text="@string/alergias"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView11" />
 
@@ -306,7 +306,7 @@
         android:layout_height="34dp"
         android:layout_marginEnd="184dp"
         android:ems="10"
-        android:hint="Ingrese su altura en cm"
+        android:hint="@string/inalt"
         android:inputType="text"
         android:textSize="12sp"
         app:layout_constraintBaseline_toBaselineOf="@+id/textView28"
@@ -320,7 +320,7 @@
         android:layout_height="32dp"
         android:layout_marginEnd="8dp"
         android:fontFamily="sans-serif-light"
-        android:hint="Ingrese su primer apellido"
+        android:hint="@string/ingreseapepat"
         android:textSize="12sp"
         android:textStyle="bold"
         app:layout_constraintBaseline_toBaselineOf="@+id/textView23"
@@ -337,10 +337,10 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/textView22"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="36dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="28dp"
         android:fontFamily="sans-serif-condensed-medium"
-        android:text="Apellido Paterno:"
+        android:text="@string/apepaterno"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView22" />
 
@@ -349,23 +349,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
-        android:text="Actualizar"
+        android:text="@string/actubtn"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.46"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/TSangreET"
-        app:layout_constraintVertical_bias="0.433" />
-
-    <Button
-        android:id="@+id/btnsesion"
-        android:layout_width="93dp"
-        android:layout_height="34dp"
-        android:layout_weight="1"
-        android:text="@string/menu_sesion"
-        android:textSize="12sp"
-        tools:layout_editor_absoluteX="318dp"
-        tools:layout_editor_absoluteY="50dp" />
+        app:layout_constraintVertical_bias="1.0" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -50,8 +50,6 @@ public class CentersFragment extends Fragment {
         userID = view.findViewById(R.id.userId);
         userImg = view.findViewById(R.id.userImagen);
         btnCerrarSesion = view.findViewById(R.id.btnLogout);
-        btnEliminarCta= view.findViewById(R.id.btnEliminarCta);
-
 
         mAuth= FirebaseAuth.getInstance();
         FirebaseUser user= mAuth.getCurrentUser();
@@ -68,37 +66,6 @@ public class CentersFragment extends Fragment {
                 Intent intent = new Intent(getActivity(), loginActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
-            }
-        });
-        btnEliminarCta.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                //////////// aqui me quede en el minuto 23:57
-                AuthCredential credential= EmailAuthProvider.getCredential(user.getEmail(), password);
-                user.reauthenticate(credential).addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        user.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull  Task<Void> task) {
-                                if (task.isSuccessful()){
-                                    mAuth.signOut();
-                                    Intent intent = new Intent(getActivity(), loginActivity.class);
-                                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                                    startActivity(intent);
-                                    mAuth.signOut();
-
-                                }else{
-                                    Toast.makeText(getContext(), "No se puede eliminar:"+task.getException(),Toast.LENGTH_LONG).show();
-                                }
-
-                            }
-                        });
-
-                    }
-                });
-
             }
         });
 

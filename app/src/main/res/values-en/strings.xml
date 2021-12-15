@@ -48,25 +48,64 @@
         <item>How does the app relate to my health center?</item>
         <item>Can I consult a physician for information?</item>
     </string-array>
+
     <string-array name="Respuesta1">
         <item>If you have an emergency and you have previously filled out your medical record, just go to the home screen, press the red emergency button, verify your situation and a notification is automatically sent to the nearest health center, providing ambulance service to the address entered.</item>
     </string-array>
     <string-array name="Respuesta2">
-        <item>El código QR permite almacenar tu información médica, en caso de que presentes un accidente, este puede ser escaneado por alguien más para brindarte servicios de forma más rápida y eficaz</item>
+        <item>The QR code allows you to store your medical information, in case you have an accident, it can be scanned by someone else to provide you services more quickly and efficiently</item>
     </string-array>
     <string-array name="Respuesta3">
-        <item>En el apartado de tu perfil, podrás modificar tu expediente contestando las preguntas disponibles</item>
+        <item>In the section of your profile, you can modify your file by answering the available questions</item>
     </string-array>
     <string-array name="Respuesta4">
-        <item>Al presionar el botón de emergencia que tienes disponible en la app, este manda una alerta a tu centro de salud, permitiendo brindarte servicio de ambulancia para que tu caso pueda ser atendido rápidamente</item>
+        <item>When you press the emergency button that you have available in the app, it sends an alert to your health center, allowing you to provide ambulance service so that your case can be attended to quickly</item>
     </string-array>
     <string-array name="Respuesta5">
-        <item>La app no está enfocada en brindarte servicio directo con algún médico en particular, sino que permite mejorar las emergencias en los centros de salud y sociedad</item>
+        <item>The app is not focused on providing you with direct service with a particular doctor, but rather allows to improve emergencies in health centers and society</item>
     </string-array>
     <string name="hacer_pregunta">Ask a question...</string>
     <string name="btn_enviar_pregunta">SEND</string>
     <string name="scan">Scan</string>
-    <string name="textViewPreguntas">Preguntas más frecuentes de la app</string>
+    <string name="textViewPreguntas">App FAQ</string>
     <string name="textViewRespuestas">Answers</string>
+    <string name="Login">Login</string>
+    <string name="Email">Email</string>
+    <string name="Password">Password</string>
+    <string name="Login2">Login</string>
+    <string name="Registro">Dont have an account?</string>
+    <string name="Registrese">Sign Up!</string>
     <string name="menu_sesion">Account</string>
+    <string name="userNombre">Account</string>
+    <string name="cerrar_sesion">Logout</string>
+    <string name="registro_usuario">Registration</string>
+    <string name="username">Username</string>
+    <string name="email">Email</string>
+    <string name="registrarse">Sign Up!</string>
+    <string name="cuenta_existente">You already have an account?</string>
+    <string name="contactanos">¡CONTACT US!</string>
+    <string name="redes_sociales">Check out our Social Media</string>
+    <string name="perfil">PROFILE</string>
+    <string name="datospersonales">Personal Data</string>
+    <string name="nombre">Name:</string>
+    <string name="ingresenombre">Insert yout name (s)</string>
+    <string name="apepaterno">Sourname:</string>
+    <string name="ingreseapepat">Insert your sourname</string>
+    <string name="apemat">Mother´s Sourname:</string>
+    <string name="ingresarapemat">Insert your mother´s sourname</string>
+    <string name="edad">Age:</string>
+    <string name="ingreedad">Insert your age in number</string>
+    <string name="sexo">Gender:</string>
+    <string name="ingresex">Insert gender</string>
+    <string name="misalud">My Health</string>
+    <string name="estatura">Height:</string>
+    <string name="inalt">Insert your height in cm</string>
+    <string name="peso">Weight:</string>
+    <string name="ingpeso">Insert your weight in Kg</string>
+    <string name="alergias">Allergies:</string>
+    <string name="ingrealer">Insert the allergies that you have</string>
+    <string name="tipsang">Blood Type:</string>
+    <string name="ingretisan">Insert your blood type</string>
+    <string name="actubtn">UPDATE</string>
+    <string name="eslogan">HealthCore! The Core of Life</string>
 </resources>

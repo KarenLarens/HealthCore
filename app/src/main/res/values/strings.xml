@@ -45,12 +45,6 @@
     <string name="btn_enviar_pregunta">ENVIAR</string>
     <string name="scan">Escanear</string>
 
-    //nuevas
-
-    <string name="agradecimiento_rate">Gracias por evaluar nuestra app!</string>//helpfragment
-
-
-
     <string-array name="Preguntas">
         <item>¿Cómo usar la app en una situación de emergencia?</item>
         <item>¿Para qué funciona el Código QR?</item>
@@ -75,7 +69,46 @@
     </string-array>
     <string name="textViewPreguntas">Preguntas más frecuentes de la app</string>
     <string name="textViewRespuestas">Respuestas</string>
+    <string name="Login">Inicio de Sesión</string>
+    <string name="Email">Correo electrónico</string>
+    <string name="Password">Contraseña</string>
+    <string name="Login2">Iniciar Sesión</string>
+    <string name="Registro">No tiene una cuenta?</string>
+    <string name="Registrese">Registrese</string>
     <string name="menu_sesion">Cuenta</string>
-
+    <string name="userNombre">Cuenta</string>
+    <string name="cerrar_sesion">Cerrar Sesión</string>
+    <string name="registro_usuario">Registro de Usuario</string>
+    <string name="username">Usuario</string>
+    <string name="email">Correo electrónico</string>
+    <string name="registrarse">Registrarse</string>
+    <string name="cuenta_existente">Ya tiene una Cuenta?</string>
+    <string name="contactanos">¡CONTÁCTANOS!</string>
+    <string name="redes_sociales">Visita nuestras Redes Sociales</string>
+    <string name="perfil">PERFIL</string>
+    <string name="datospersonales">Datos Personales</string>
+    <string name="nombre">Nombre:</string>
+    <string name="ingresenombre">Ingrese su nombre (s)</string>
+    <string name="apepaterno">Apellido Paterno:</string>
+    <string name="ingreseapepat">Ingrese su primer apellido</string>
+    <string name="apemat">Apellido Materno:</string>
+    <string name="ingresarapemat">Ingrese su segundo apellido</string>
+    <string name="edad">Edad:</string>
+    <string name="ingreedad">Ingrese su edad en número</string>
+    <string name="sexo">Sexo:</string>
+    <string name="ingresex">Ingrese su sexo</string>
+    <string name="misalud">Mi Salud</string>
+    <string name="estatura">Estatura:</string>
+    <string name="inalt">Ingrese su altura en cm</string>
+    <string name="peso">Peso:</string>
+    <string name="ingpeso">Ingrese su peso en Kg</string>
+    <string name="alergias">Alergias:</string>
+    <string name="ingrealer">Ingrese las alergias que posee</string>
+    <string name="tipsang">Tipo de sangre:</string>
+    <string name="ingretisan">Ingrese su tipo de sangre</string>
+    <string name="actubtn">ACTUALIZAR</string>
+    <string name="eslogan">HealthCore! El núcleo de la Vida</string>
 
 </resources>
+
+

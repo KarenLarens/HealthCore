@@ -1,5 +1,6 @@
 package com.example.registration.ui;
 
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -44,23 +45,25 @@ public class HelpFragment extends Fragment {
         spinnerPreguntas.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> lista, View view, int pos, long id) {
-                if(lista.getItemAtPosition(pos).equals("¿Cómo usar la app en una situación de emergencia?")) {
+                Resources res= getResources();
+                String[] preguntas = res.getStringArray(R.array.Preguntas);
+                if(lista.getItemAtPosition(pos).equals(preguntas[0])) {
                     ArrayAdapter listaAdapter = ArrayAdapter.createFromResource(getActivity(), R.array.Respuesta1, android.R.layout.simple_list_item_1);
                     ListViewRespuestas.setAdapter(listaAdapter);
                 }
-                if(lista.getItemAtPosition(pos).equals("¿Para qué funciona el Código QR?")) {
+                if(lista.getItemAtPosition(pos).equals(preguntas[1])) {
                     ArrayAdapter listaAdapter = ArrayAdapter.createFromResource(getActivity(), R.array.Respuesta2, android.R.layout.simple_list_item_1);
                     ListViewRespuestas.setAdapter(listaAdapter);
                 }
-                if(lista.getItemAtPosition(pos).equals("¿Cómo realizo mi expediente médico?")) {
+                if(lista.getItemAtPosition(pos).equals(preguntas[2])) {
                     ArrayAdapter listaAdapter = ArrayAdapter.createFromResource(getActivity(), R.array.Respuesta3, android.R.layout.simple_list_item_1);
                     ListViewRespuestas.setAdapter(listaAdapter);
                 }
-                if(lista.getItemAtPosition(pos).equals("¿Cómo se relaciona la app con mi centro de salud?")) {
+                if(lista.getItemAtPosition(pos).equals(preguntas[3])) {
                     ArrayAdapter listaAdapter = ArrayAdapter.createFromResource(getActivity(), R.array.Respuesta4, android.R.layout.simple_list_item_1);
                     ListViewRespuestas.setAdapter(listaAdapter);
                 }
-                if(lista.getItemAtPosition(pos).equals("¿Puedo consultar información con algún médico?")) {
+                if(lista.getItemAtPosition(pos).equals(preguntas[4])) {
                     ArrayAdapter listaAdapter = ArrayAdapter.createFromResource(getActivity(), R.array.Respuesta5, android.R.layout.simple_list_item_1);
                     ListViewRespuestas.setAdapter(listaAdapter);
                 }
