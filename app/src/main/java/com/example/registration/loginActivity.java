@@ -74,7 +74,7 @@ public class loginActivity extends AppCompatActivity implements GestureDetector.
 
     @Override
     public void onLongPress(MotionEvent motionEvent) {
-        Intent intent = new Intent(loginActivity.this, RegisterActivity.class);
+        Intent intent = new Intent(loginActivity.this, MenuActivity.class);
         startActivity(intent);
     }
 
