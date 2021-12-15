@@ -46,6 +46,12 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
     Button btn_emer;
 
     @Override
+    public boolean onTouchEvent (MotionEvent event) {
+        this.gestureDetector.onTouchEvent(event);
+        return super.onTouchEvent(event);
+    }
+
+    @Override
     public boolean onSingleTapConfirmed(MotionEvent motionEvent) {
         return false;
     }
