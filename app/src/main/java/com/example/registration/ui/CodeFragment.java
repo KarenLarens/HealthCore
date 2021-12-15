@@ -85,7 +85,6 @@ public class CodeFragment extends Fragment {
                             BarcodeEncoder encoder = new BarcodeEncoder();
                             Bitmap bitmap = encoder.createBitmap(matrix);
                             ivOutput.setImageBitmap(bitmap);
-                            InputMethodManager manager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
 
                         } catch (WriterException e) {
                             e.printStackTrace();

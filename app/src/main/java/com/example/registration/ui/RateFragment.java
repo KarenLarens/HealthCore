@@ -60,13 +60,6 @@ public class RateFragment extends Fragment {
                 valoracion.setEstrellas(estrellita);
                 try{
                     reference.child(xd).setValue(valoracion);
-
-                    Toast.makeText(getActivity(), "uid: "+user.getUid(), Toast.LENGTH_SHORT).show();
-                    Toast.makeText(getActivity(), "estrellas: "+valoracion.getEstrellas(), Toast.LENGTH_SHORT).show();
-                    Toast.makeText(getActivity(), "comentario:  "+valoracion.getComentario(), Toast.LENGTH_SHORT).show();
-                    Toast.makeText(getActivity(), "Si jalowin", Toast.LENGTH_SHORT).show();
-
-                    Toast.makeText(getActivity(), "Si jalowin", Toast.LENGTH_SHORT).show();
                 }catch (DatabaseException e){
                     Toast.makeText(getActivity(), ("Error: "+e.getMessage()), Toast.LENGTH_LONG).show();
                 }
