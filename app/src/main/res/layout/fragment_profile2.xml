@@ -32,6 +32,7 @@
             android:textColor="#7ACFC7"
             android:textSize="34sp"
             android:textStyle="bold" />
+
     </LinearLayout>
 
     <ImageView
@@ -355,6 +356,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/TSangreET"
         app:layout_constraintVertical_bias="0.433" />
+
+    <Button
+        android:id="@+id/btnsesion"
+        android:layout_width="93dp"
+        android:layout_height="34dp"
+        android:layout_weight="1"
+        android:text="@string/menu_sesion"
+        android:textSize="12sp"
+        tools:layout_editor_absoluteX="318dp"
+        tools:layout_editor_absoluteY="50dp" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

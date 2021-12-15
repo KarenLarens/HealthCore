@@ -68,5 +68,6 @@
     </string-array>
     <string name="textViewPreguntas">Preguntas más frecuentes de la app</string>
     <string name="textViewRespuestas">Respuestas</string>
+    <string name="menu_sesion">Cuenta</string>
 
 </resources>

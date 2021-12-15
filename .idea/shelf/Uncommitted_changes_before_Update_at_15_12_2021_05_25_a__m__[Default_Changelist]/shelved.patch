@@ -1,0 +1,869 @@
+Index: app/src/main/java/com/example/registration/ui/CentersFragment.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.registration.ui;\r\n\r\nimport android.os.Bundle;\r\nimport android.view.LayoutInflater;\r\nimport android.view.View;\r\nimport android.view.ViewGroup;\r\n\r\nimport androidx.annotation.NonNull;\r\nimport androidx.annotation.Nullable;\r\nimport androidx.fragment.app.Fragment;\r\n\r\nimport com.example.registration.R;\r\n\r\npublic class CentersFragment extends Fragment {\r\n    @Nullable\r\n    @Override\r\n    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {\r\n        return inflater.inflate(R.layout.fragment_centers, container, false);\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/registration/ui/CentersFragment.java b/app/src/main/java/com/example/registration/ui/CentersFragment.java
+--- a/app/src/main/java/com/example/registration/ui/CentersFragment.java	(revision 2fa4766e062652c946f08744d395af4b2ac0fb92)
++++ b/app/src/main/java/com/example/registration/ui/CentersFragment.java	(date 1639566543045)
+@@ -1,5 +1,28 @@
+ package com.example.registration.ui;
+ 
++import androidx.annotation.NonNull;
++import androidx.appcompat.app.AppCompatActivity;
++
++import android.content.Intent;
++import android.os.Bundle;
++import android.view.View;
++import android.widget.Button;
++import android.widget.ImageView;
++import android.widget.TextView;
++import android.widget.Toast;
++
++import com.example.registration.MainActivity;
++import com.example.registration.R;
++import com.bumptech.glide.Glide;
++import com.example.registration.loginActivity;
++import com.google.android.gms.tasks.OnCompleteListener;
++import com.google.android.gms.tasks.Task;
++import com.google.firebase.auth.AuthCredential;
++import com.google.firebase.auth.EmailAuthProvider;
++import com.google.firebase.auth.FirebaseAuth;
++import com.google.firebase.auth.FirebaseUser;
++
++import de.hdodenhof.circleimageview.CircleImageView;
+ import android.os.Bundle;
+ import android.view.LayoutInflater;
+ import android.view.View;
+@@ -12,9 +35,73 @@
+ import com.example.registration.R;
+ 
+ public class CentersFragment extends Fragment {
++    private TextView userNombre,userEmail,userID;
++    private CircleImageView userImg;
++    private Button btnCerrarSesion, btnEliminarCta;
++    FirebaseAuth mAuth;
++    public String password;
+     @Nullable
+     @Override
+     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+-        return inflater.inflate(R.layout.fragment_centers, container, false);
++        View view = inflater.inflate(R.layout.fragment_centers, container, false);
++
++        userNombre = view.findViewById(R.id.userNombre);
++        userEmail = view.findViewById(R.id.userEmail);
++        userID = view.findViewById(R.id.userId);
++        userImg = view.findViewById(R.id.userImagen);
++        btnCerrarSesion = view.findViewById(R.id.btnLogout);
++        btnEliminarCta= view.findViewById(R.id.btnEliminarCta);
++
++
++        mAuth= FirebaseAuth.getInstance();
++        FirebaseUser user= mAuth.getCurrentUser();
++
++        userEmail.setText(user.getEmail());
++        userID.setText(user.getUid());
++        ///obtener data
++        Bundle data= getActivity().getIntent().getExtras();
++
++        btnCerrarSesion.setOnClickListener(new View.OnClickListener() {
++            @Override
++            public void onClick(View view) {
++                mAuth.signOut();
++                Intent intent = new Intent(getActivity(), loginActivity.class);
++                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
++                startActivity(intent);
++            }
++        });
++        btnEliminarCta.setOnClickListener(new View.OnClickListener() {
++            @Override
++            public void onClick(View view) {
++                final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
++                //////////// aqui me quede en el minuto 23:57
++                AuthCredential credential= EmailAuthProvider.getCredential(user.getEmail(), password);
++                user.reauthenticate(credential).addOnCompleteListener(new OnCompleteListener<Void>() {
++                    @Override
++                    public void onComplete(@NonNull Task<Void> task) {
++                        user.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
++                            @Override
++                            public void onComplete(@NonNull  Task<Void> task) {
++                                if (task.isSuccessful()){
++                                    mAuth.signOut();
++                                    Intent intent = new Intent(getActivity(), loginActivity.class);
++                                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
++                                    startActivity(intent);
++                                    mAuth.signOut();
++
++                                }else{
++                                    Toast.makeText(getContext(), "No se puede eliminar:"+task.getException(),Toast.LENGTH_LONG).show();
++                                }
++
++                            }
++                        });
++
++                    }
++                });
++
++            }
++        });
++
++        return view;
+     }
+ }
+Index: app/src/main/java/com/example/registration/loginActivity.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.registration;\r\n\r\nimport androidx.annotation.NonNull;\r\nimport androidx.appcompat.app.AppCompatActivity;\r\nimport androidx.appcompat.app.AppCompatDelegate;\r\n\r\nimport android.app.ProgressDialog;\r\nimport android.content.Context;\r\nimport android.content.Intent;\r\nimport android.content.SharedPreferences;\r\nimport android.os.Bundle;\r\nimport android.view.View;\r\nimport android.widget.Button;\r\nimport android.widget.EditText;\r\nimport android.widget.TextView;\r\nimport android.widget.Toast;\r\n\r\nimport com.google.android.gms.tasks.OnCompleteListener;\r\nimport com.google.android.gms.tasks.Task;\r\nimport com.google.firebase.FirebaseApp;\r\nimport com.google.firebase.auth.AuthResult;\r\nimport com.google.firebase.auth.FirebaseAuth;\r\nimport com.google.firebase.auth.FirebaseUser;\r\n\r\nimport static java.lang.Thread.sleep;\r\n\r\npublic class loginActivity extends AppCompatActivity {\r\n\r\n    TextView lblCrearCuenta;\r\n    EditText txtInputEmail, txtInputPassword;\r\n    Button btnLogin;\r\n    FirebaseAuth mAuth;\r\n    public static String correo;\r\n\r\n    private ProgressDialog mProgressBar;\r\n    @Override\r\n    protected void onCreate(Bundle savedInstanceState) {\r\n        setContentView(R.layout.activity_splash_screen);\r\n        try {\r\n            Thread.sleep(3000);\r\n        } catch (InterruptedException e) {\r\n            e.printStackTrace();\r\n        }\r\n        //AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);\r\n        super.onCreate(savedInstanceState);\r\n        //AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);\r\n        setContentView(R.layout.activity_login);\r\n        txtInputEmail = findViewById(R.id.inputEmail);\r\n        txtInputPassword = findViewById(R.id.inputPassword);\r\n        btnLogin = findViewById(R.id.btnlogin);\r\n        lblCrearCuenta = findViewById(R.id.txtNotieneCuenta);\r\n\r\n        lblCrearCuenta.setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View view) {\r\n                startActivity(new Intent(loginActivity.this,RegisterActivity.class));\r\n            }\r\n        });\r\n        btnLogin.setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View view) {\r\n                verificarCredenciales();\r\n            }\r\n        });\r\n\r\n        mProgressBar = new ProgressDialog(loginActivity.this);\r\n        mAuth= FirebaseAuth.getInstance();\r\n    }\r\n    ///////revisado\r\n\r\n    public void verificarCredenciales(){\r\n        String email = txtInputEmail.getText().toString();\r\n        final String password = txtInputPassword.getText().toString();\r\n        if(email.isEmpty() || !email.contains(\"@\")){\r\n            showError(txtInputEmail, \"Email no valido\");\r\n        }else if(password.isEmpty()|| password.length()<7){\r\n            showError(txtInputPassword, \"Password invalida\");\r\n        }else{\r\n            //Mostrar ProgressBar\r\n            mProgressBar.setTitle(\"Login\");\r\n            mProgressBar.setMessage(\"Iniciando sesión, espere un momento..\");\r\n            mProgressBar.setCanceledOnTouchOutside(false);\r\n            mProgressBar.show();\r\n            mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {\r\n                @Override\r\n                public void onComplete(@NonNull Task<AuthResult> task) {\r\n                    if (task.isSuccessful()){\r\n                        //ocultar progressBar\r\n                        mProgressBar.dismiss();\r\n\r\n                        //Para rating\r\n\r\n                        ///guardar clave\r\n                        SharedPreferences prefs = getSharedPreferences(\"MyPreferences\", Context.MODE_PRIVATE);\r\n                        String password_guardada = prefs.getString(\"Password\",\"\");\r\n                        SharedPreferences.Editor editor= prefs.edit();\r\n                        editor.putString(\"Password\",password);\r\n                        editor.commit();\r\n\r\n                        //guardar correo\r\n                        SharedPreferences prefs2 = getSharedPreferences(\"MyPreferences\", Context.MODE_PRIVATE);\r\n                        String email_guardado = prefs.getString(\"Correo\",\"\");\r\n                        SharedPreferences.Editor editor2= prefs2.edit();\r\n                        editor.putString(\"Correo\",email);\r\n                        editor.commit();\r\n\r\n                        //redireccionar - intent a login\r\n                        Intent intent = new Intent(loginActivity.this, MenuActivity.class);\r\n                        intent.putExtra(\"Password\",password);\r\n                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);\r\n                        startActivity(intent);\r\n                    }else{\r\n                        Toast.makeText(getApplicationContext(), \"No se pudo iniciar sesíón, verifique correo/password\", Toast.LENGTH_LONG).show();\r\n                    }\r\n                }\r\n            });\r\n        }\r\n    }\r\n\r\n    private void showError(EditText input, String s){\r\n        input.setError(s);\r\n        input.requestFocus();\r\n    }\r\n\r\n    @Override\r\n    protected void onStart() {\r\n        FirebaseUser user= mAuth.getCurrentUser();\r\n        if(user!= null){\r\n            //obtener  clave\r\n            SharedPreferences prefs =getSharedPreferences(\"MyPreferences\", Context.MODE_PRIVATE);\r\n            String password_guardada = prefs.getString(\"Url\",\"\");\r\n            Intent intent = new Intent(loginActivity.this,MenuActivity.class);\r\n            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);\r\n            startActivity(intent);\r\n        }\r\n        super.onStart();\r\n    }}\r\n\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/registration/loginActivity.java b/app/src/main/java/com/example/registration/loginActivity.java
+--- a/app/src/main/java/com/example/registration/loginActivity.java	(revision 2fa4766e062652c946f08744d395af4b2ac0fb92)
++++ b/app/src/main/java/com/example/registration/loginActivity.java	(date 1639566757655)
+@@ -3,18 +3,20 @@
+ import androidx.annotation.NonNull;
+ import androidx.appcompat.app.AppCompatActivity;
+ import androidx.appcompat.app.AppCompatDelegate;
+-
++import android.view.GestureDetector;
+ import android.app.ProgressDialog;
+ import android.content.Context;
+ import android.content.Intent;
+ import android.content.SharedPreferences;
+ import android.os.Bundle;
++import android.view.MotionEvent;
+ import android.view.View;
+ import android.widget.Button;
+ import android.widget.EditText;
+ import android.widget.TextView;
+ import android.widget.Toast;
+ 
++import com.example.registration.ui.ContactFragment;
+ import com.google.android.gms.tasks.OnCompleteListener;
+ import com.google.android.gms.tasks.Task;
+ import com.google.firebase.FirebaseApp;
+@@ -24,12 +26,69 @@
+ 
+ import static java.lang.Thread.sleep;
+ 
+-public class loginActivity extends AppCompatActivity {
++public class loginActivity extends AppCompatActivity implements GestureDetector.OnGestureListener, GestureDetector.OnDoubleTapListener{
++    @Override
++    public boolean onSingleTapConfirmed(MotionEvent motionEvent) {
++        return false;
++    }
++
++    @Override
++    public boolean onDoubleTap(MotionEvent motionEvent) {
++        Intent intent = new Intent(loginActivity.this, RegisterActivity.class);
++        startActivity(intent);
++        return false;
++    }
++
++    @Override
++    public boolean onDoubleTapEvent(MotionEvent motionEvent) {
++        Intent intent = new Intent(loginActivity.this, ContactFragment.class);
++        startActivity(intent);
++        return false;
++    }
++
++    @Override
++    public boolean onDown(MotionEvent motionEvent) {
++        return false;
++    }
++
++    @Override
++    public void onShowPress(MotionEvent motionEvent) {
++
++    }
++
++    @Override
++    public boolean onSingleTapUp(MotionEvent motionEvent) {
++        return false;
++    }
++
++    @Override
++    public boolean onScroll(MotionEvent motionEvent, MotionEvent motionEvent1, float v, float v1) {
++        Intent intent = new Intent(loginActivity.this, ContactFragment.class);
++        startActivity(intent);
++        return false;
++    }
++
++    @Override
++    public void onLongPress(MotionEvent motionEvent) {
++        Intent intent = new Intent(loginActivity.this, RegisterActivity.class);
++        startActivity(intent);
++    }
++
++    @Override
++    public boolean onFling(MotionEvent motionEvent, MotionEvent motionEvent1, float v, float v1) {
++        return false;
++    }
++
++    @Override
++    public void onPointerCaptureChanged(boolean hasCapture) {
++
++    }
+ 
+     TextView lblCrearCuenta;
+     EditText txtInputEmail, txtInputPassword;
+     Button btnLogin;
+     FirebaseAuth mAuth;
++    private GestureDetector gestureDetector;
+     public static String correo;
+ 
+     private ProgressDialog mProgressBar;
+@@ -45,6 +104,8 @@
+         super.onCreate(savedInstanceState);
+         //AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
+         setContentView(R.layout.activity_login);
++        this.gestureDetector = new GestureDetector(this, this);
++        gestureDetector.setOnDoubleTapListener(this);
+         txtInputEmail = findViewById(R.id.inputEmail);
+         txtInputPassword = findViewById(R.id.inputPassword);
+         btnLogin = findViewById(R.id.btnlogin);
+Index: app/src/main/java/com/example/registration/ui/ContactFragment.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.registration.ui;\r\n//CONTACTO\r\nimport android.content.Intent;\r\nimport android.net.Uri;\r\nimport android.os.Bundle;\r\nimport android.view.LayoutInflater;\r\nimport android.view.View;\r\nimport android.view.ViewGroup;\r\nimport android.widget.ImageButton;\r\n\r\nimport androidx.annotation.NonNull;\r\nimport androidx.annotation.Nullable;\r\nimport androidx.fragment.app.Fragment;\r\n\r\nimport com.example.registration.R;\r\n\r\npublic class ContactFragment extends Fragment {\r\n    private ImageButton btnLogoFace, btnLogoInsta;\r\n    @Nullable\r\n    @Override\r\n    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {\r\n        View view = inflater.inflate(R.layout.fragment_contact, container, false);\r\n        ImageButton entry = view.findViewById(R.id.btnLogoFace);\r\n        entry.setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View view) {\r\n                Uri uri = Uri.parse(\"https://www.facebook.com/HealthCore-101091559105887/\");\r\n                Intent intent = new Intent(Intent.ACTION_VIEW, uri);\r\n                startActivity(intent);\r\n            }\r\n        });\r\n        ImageButton entry2 = view.findViewById(R.id.btnLogoInsta);\r\n        entry2.setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View view) {\r\n                Uri uri = Uri.parse(\"https://www.instagram.com/invites/contact/?i=5mh754mnxvyc&utm_content=neaqs6l\");\r\n                Intent intent = new Intent(Intent.ACTION_VIEW, uri);\r\n                startActivity(intent);\r\n            }\r\n        });\r\n\r\n        return view;\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/registration/ui/ContactFragment.java b/app/src/main/java/com/example/registration/ui/ContactFragment.java
+--- a/app/src/main/java/com/example/registration/ui/ContactFragment.java	(revision 2fa4766e062652c946f08744d395af4b2ac0fb92)
++++ b/app/src/main/java/com/example/registration/ui/ContactFragment.java	(date 1639565117202)
+@@ -39,6 +39,8 @@
+             }
+         });
+ 
++
++
+         return view;
+     }
+ }
+Index: app/src/main/java/com/example/registration/MainActivity.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.registration;\r\n\r\nimport androidx.annotation.NonNull;\r\nimport androidx.appcompat.app.AppCompatActivity;\r\n\r\nimport android.content.Intent;\r\nimport android.os.Bundle;\r\nimport android.view.View;\r\nimport android.widget.Button;\r\nimport android.widget.ImageView;\r\nimport android.widget.TextView;\r\nimport android.widget.Toast;\r\nimport com.example.registration.R;\r\nimport com.bumptech.glide.Glide;\r\nimport com.google.android.gms.tasks.OnCompleteListener;\r\nimport com.google.android.gms.tasks.Task;\r\nimport com.google.firebase.auth.AuthCredential;\r\nimport com.google.firebase.auth.EmailAuthProvider;\r\nimport com.google.firebase.auth.FirebaseAuth;\r\nimport com.google.firebase.auth.FirebaseUser;\r\n\r\nimport de.hdodenhof.circleimageview.CircleImageView;\r\n\r\npublic class MainActivity extends AppCompatActivity {\r\n\r\n    private TextView userNombre,userEmail,userID;\r\n    private CircleImageView userImg;\r\n    private Button btnCerrarSesion, btnEliminarCta;\r\n    FirebaseAuth mAuth;\r\n    private String password;\r\n    @Override\r\n    protected void onCreate(Bundle savedInstanceState) {\r\n        super.onCreate(savedInstanceState);\r\n        setContentView(R.layout.activity_main);\r\n        userNombre = findViewById(R.id.userNombre);\r\n        userEmail = findViewById(R.id.userEmail);\r\n        userID = findViewById(R.id.userId);\r\n        userImg = findViewById(R.id.userImagen);\r\n        btnCerrarSesion = findViewById(R.id.btnLogout);\r\n        btnEliminarCta= findViewById(R.id.btnEliminarCta);\r\n\r\n\r\n        mAuth= FirebaseAuth.getInstance();\r\n        FirebaseUser user= mAuth.getCurrentUser();\r\n\r\n        userEmail.setText(user.getEmail());\r\n        userID.setText(user.getUid());\r\n        ///obtener data\r\n        Bundle data= this.getIntent().getExtras();\r\n        password= data.getString(password);\r\n\r\n\r\n        //cargar imágen con glide:\r\n        //Glide.with(this).load(url).into(userImg);\r\n\r\n        btnCerrarSesion.setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View view) {\r\n                mAuth.signOut();\r\n                Intent intent = new Intent(MainActivity.this, loginActivity.class);\r\n                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);\r\n                startActivity(intent);\r\n            }\r\n        });\r\n        btnEliminarCta.setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View view) {\r\n                final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();\r\n                //////////// aqui me quede en el minuto 23:57\r\n                AuthCredential credential= EmailAuthProvider.getCredential(user.getEmail(), password);\r\n                user.reauthenticate(credential).addOnCompleteListener(new OnCompleteListener<Void>() {\r\n                    @Override\r\n                    public void onComplete(@NonNull Task<Void> task) {\r\n                        user.delete().addOnCompleteListener(new OnCompleteListener<Void>() {\r\n                            @Override\r\n                            public void onComplete(@NonNull  Task<Void> task) {\r\n                                if (task.isSuccessful()){\r\n                                    mAuth.signOut();\r\n                                    Intent intent = new Intent(MainActivity.this, loginActivity.class);\r\n                                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);\r\n                                    startActivity(intent);\r\n                                    mAuth.signOut();\r\n\r\n                                }else{\r\n                                    Toast.makeText(getApplicationContext(), \"No se puede eliminar:\"+task.getException(),Toast.LENGTH_LONG).show();\r\n                                }\r\n\r\n                            }\r\n                        });\r\n\r\n                    }\r\n                });\r\n\r\n            }\r\n        });\r\n\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/registration/MainActivity.java b/app/src/main/java/com/example/registration/MainActivity.java
+--- a/app/src/main/java/com/example/registration/MainActivity.java	(revision 2fa4766e062652c946f08744d395af4b2ac0fb92)
++++ b/app/src/main/java/com/example/registration/MainActivity.java	(date 1639555691972)
+@@ -47,7 +47,7 @@
+         userID.setText(user.getUid());
+         ///obtener data
+         Bundle data= this.getIntent().getExtras();
+-        password= data.getString(password);
++        password = data.getString(password);
+ 
+ 
+         //cargar imágen con glide:
+Index: app/src/main/java/com/example/registration/MenuActivity.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.registration;\r\n\r\nimport android.Manifest;\r\nimport android.annotation.SuppressLint;\r\nimport android.content.Intent;\r\nimport android.content.pm.PackageManager;\r\nimport android.net.Uri;\r\nimport android.os.Build;\r\nimport android.os.Bundle;\r\nimport android.view.MenuItem;\r\nimport android.view.View;\r\nimport android.widget.ImageButton;\r\nimport android.widget.ImageView;\r\nimport android.widget.Toast;\r\nimport android.widget.Button;\r\n\r\nimport androidx.annotation.NonNull;\r\nimport androidx.appcompat.app.ActionBarDrawerToggle;\r\nimport androidx.appcompat.widget.Toolbar;\r\n\r\nimport androidx.appcompat.app.AppCompatActivity;\r\nimport androidx.core.app.ActivityCompat;\r\nimport androidx.core.content.ContextCompat;\r\nimport androidx.core.view.GravityCompat;\r\nimport androidx.drawerlayout.widget.DrawerLayout;\r\n\r\nimport com.example.registration.ui.CentersFragment;\r\nimport com.example.registration.ui.CodeFragment;\r\nimport com.example.registration.ui.ContactFragment;\r\nimport com.example.registration.ui.HelpFragment;\r\nimport com.example.registration.ui.ProfileFragment;\r\nimport com.example.registration.ui.RateFragment;\r\nimport com.google.android.material.navigation.NavigationView;\r\nimport com.google.zxing.integration.android.IntentIntegrator;\r\nimport com.google.zxing.integration.android.IntentResult;\r\nimport com.example.registration.ui.ProfileFragment2;\r\n\r\npublic class MenuActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {\r\n\r\n    private static final int REQUEST_PERMISSION_CALL =100;\r\n    private static final int REQUEST_PERMISSION_LOCATION =100;\r\n    private DrawerLayout drawer;\r\n    Button btn_emer;\r\n\r\n    @SuppressLint(\"WrongViewCast\")\r\n    @Override\r\n    protected void onCreate(Bundle savedInstanceState) {\r\n        super.onCreate(savedInstanceState);\r\n        setContentView(R.layout.menu);\r\n\r\n        Toolbar toolbar = findViewById(R.id.toolbar);\r\n        setSupportActionBar(toolbar);\r\n\r\n        drawer = findViewById(R.id.drawer_layout);\r\n        NavigationView navigationView = findViewById(R.id.nav_view);\r\n        navigationView.setNavigationItemSelectedListener(this);\r\n\r\n        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,\r\n                R.string.navigation_drawer_open, R.string.navigation_drawer_close);\r\n        drawer.addDrawerListener(toggle);\r\n        toggle.syncState();\r\n\r\n        if (savedInstanceState == null) {\r\n            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,\r\n                    new ProfileFragment()).commit();\r\n            navigationView.setCheckedItem(R.id.nav_profile);\r\n        }\r\n\r\n    }\r\n\r\n    @Override\r\n    public boolean onNavigationItemSelected(@NonNull MenuItem item) {\r\n        switch (item.getItemId()){\r\n            case R.id.nav_boton:\r\n                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,\r\n                        new ProfileFragment()).commit();\r\n                break;\r\n            case R.id.nav_profile:\r\n                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,\r\n                        new ProfileFragment2()).commit();\r\n                break;\r\n            case R.id.nav_code:\r\n                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,\r\n                        new CodeFragment()).commit();\r\n                break;\r\n            case R.id.nav_centers:\r\n                if(Build.VERSION.SDK_INT<Build.VERSION_CODES.M){\r\n                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(\"geo:0,0?q=hospital\")));\r\n                }else{\r\n                    if ((ContextCompat.checkSelfPermission(MenuActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) &&\r\n                            (ContextCompat.checkSelfPermission(MenuActivity.this,Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED)){\r\n                        startActivity(new Intent(Intent.ACTION_VIEW,Uri.parse(\"geo:0,0?q=hospital\")));\r\n                    }else{\r\n                        ActivityCompat.requestPermissions(MenuActivity.this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION},REQUEST_PERMISSION_LOCATION);\r\n                        Toast toast1 = Toast.makeText(getApplicationContext(),\"Debes habilitar los permisos de ubicación para usar esta función.\",Toast.LENGTH_SHORT);\r\n                        toast1.show();\r\n                        if ((ContextCompat.checkSelfPermission(MenuActivity.this,Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) &&\r\n                                (ContextCompat.checkSelfPermission(MenuActivity.this,Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED)) {\r\n                            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(\"geo:0,0?q=hospital\")));\r\n                        }\r\n                    }\r\n                }\r\n                break;\r\n            case R.id.nav_contact:\r\n                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,\r\n                        new ContactFragment()).commit();\r\n                break;\r\n            case R.id.nav_help:\r\n                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,\r\n                        new HelpFragment()).commit();\r\n                break;\r\n            case R.id.nav_rate:\r\n                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,\r\n                        new RateFragment()).commit();\r\n                break;\r\n        }\r\n\r\n        drawer.closeDrawer(GravityCompat.START);\r\n\r\n        return true;\r\n    }\r\n\r\n    @Override\r\n    public void onBackPressed() {\r\n        if (drawer.isDrawerOpen(GravityCompat.START)) {\r\n            drawer.closeDrawer(GravityCompat.START);\r\n        } else {\r\n            super.onBackPressed();\r\n        }\r\n    }\r\n\r\n    @Override\r\n    public void onSaveInstanceState(Bundle outState) {\r\n        super.onSaveInstanceState(outState);\r\n    }\r\n\r\n\r\n}\r\n\r\n\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/registration/MenuActivity.java b/app/src/main/java/com/example/registration/MenuActivity.java
+--- a/app/src/main/java/com/example/registration/MenuActivity.java	(revision 2fa4766e062652c946f08744d395af4b2ac0fb92)
++++ b/app/src/main/java/com/example/registration/MenuActivity.java	(date 1639566356631)
+@@ -2,18 +2,20 @@
+ 
+ import android.Manifest;
+ import android.annotation.SuppressLint;
++import android.app.Activity;
+ import android.content.Intent;
+ import android.content.pm.PackageManager;
+ import android.net.Uri;
+ import android.os.Build;
+ import android.os.Bundle;
+ import android.view.MenuItem;
++import android.view.MotionEvent;
+ import android.view.View;
+ import android.widget.ImageButton;
+ import android.widget.ImageView;
+ import android.widget.Toast;
+ import android.widget.Button;
+-
++import android.view.GestureDetector;
+ import androidx.annotation.NonNull;
+ import androidx.appcompat.app.ActionBarDrawerToggle;
+ import androidx.appcompat.widget.Toolbar;
+@@ -35,19 +37,76 @@
+ import com.google.zxing.integration.android.IntentResult;
+ import com.example.registration.ui.ProfileFragment2;
+ 
+-public class MenuActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
++public class MenuActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, GestureDetector.OnGestureListener, GestureDetector.OnDoubleTapListener {
+ 
+     private static final int REQUEST_PERMISSION_CALL =100;
+     private static final int REQUEST_PERMISSION_LOCATION =100;
+     private DrawerLayout drawer;
++    private GestureDetector gestureDetector;
+     Button btn_emer;
+ 
++    @Override
++    public boolean onSingleTapConfirmed(MotionEvent motionEvent) {
++        return false;
++    }
++
++    @Override
++    public boolean onDoubleTap(MotionEvent motionEvent) {
++        Intent intent = new Intent(MenuActivity.this, loginActivity.class);
++        startActivity(intent);
++        return false;
++    }
++
++    @Override
++    public boolean onDoubleTapEvent(MotionEvent motionEvent) {
++        return false;
++    }
++
++    @Override
++    public boolean onDown(MotionEvent motionEvent) {
++        return false;
++    }
++
++    @Override
++    public void onShowPress(MotionEvent motionEvent) {
++
++    }
++
++    @Override
++    public boolean onSingleTapUp(MotionEvent motionEvent) {
++        return false;
++    }
++
++    @Override
++    public boolean onScroll(MotionEvent motionEvent, MotionEvent motionEvent1, float v, float v1) {
++        return false;
++    }
++
++    @Override
++    public void onLongPress(MotionEvent motionEvent) {
++        Intent intent = new Intent(MenuActivity.this, loginActivity.class);
++        startActivity(intent);
++    }
++
++    @Override
++    public boolean onFling(MotionEvent motionEvent, MotionEvent motionEvent1, float v, float v1) {
++        return false;
++    }
++
++    @Override
++    public void onPointerCaptureChanged(boolean hasCapture) {
++
++    }
++
+     @SuppressLint("WrongViewCast")
+     @Override
+     protected void onCreate(Bundle savedInstanceState) {
+         super.onCreate(savedInstanceState);
+         setContentView(R.layout.menu);
+ 
++        this.gestureDetector = new GestureDetector(this, this);
++        gestureDetector.setOnDoubleTapListener(this);
++
+         Toolbar toolbar = findViewById(R.id.toolbar);
+         setSupportActionBar(toolbar);
+ 
+@@ -113,6 +172,10 @@
+                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                         new RateFragment()).commit();
+                 break;
++            case R.id.nav_sesion:
++                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
++                        new CentersFragment()).commit();
++                break;
+         }
+ 
+         drawer.closeDrawer(GravityCompat.START);
+Index: app/src/main/res/layout/activity_main.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<androidx.constraintlayout.widget.ConstraintLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    tools:context=\".MainActivity\"\r\n    android:background=\"@drawable/gradiente_background\"\r\n    >\r\n\r\n    <androidx.cardview.widget.CardView\r\n        android:id=\"@+id/cardView\"\r\n        android:layout_width=\"0dp\"\r\n        android:layout_height=\"250dp\"\r\n        android:layout_marginStart=\"24dp\"\r\n        android:layout_marginTop=\"8dp\"\r\n        android:layout_marginEnd=\"24dp\"\r\n        app:cardBackgroundColor=\"#FFFFFF\"\r\n        app:cardCornerRadius=\"10dp\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toTopOf=\"parent\">\r\n\r\n        <androidx.constraintlayout.widget.ConstraintLayout\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"match_parent\">\r\n\r\n            <de.hdodenhof.circleimageview.CircleImageView\r\n                android:id=\"@+id/userImagen\"\r\n                android:layout_width=\"150dp\"\r\n                android:layout_height=\"150dp\"\r\n                android:layout_margin=\"16dp\"\r\n                android:layout_marginTop=\"56dp\"\r\n                android:src=\"@drawable/userimg\"\r\n                app:layout_constraintEnd_toEndOf=\"parent\"\r\n                app:layout_constraintStart_toStartOf=\"parent\"\r\n                app:layout_constraintTop_toTopOf=\"parent\" />\r\n\r\n            <View\r\n                android:id=\"@+id/view\"\r\n                android:layout_width=\"wrap_content\"\r\n                android:layout_height=\"2dp\"\r\n                android:layout_marginTop=\"40dp\"\r\n                android:background=\"#353535\"\r\n                app:layout_constraintEnd_toEndOf=\"parent\"\r\n                app:layout_constraintHorizontal_bias=\"0.0\"\r\n                app:layout_constraintStart_toStartOf=\"parent\"\r\n                app:layout_constraintTop_toBottomOf=\"@+id/userImagen\" />\r\n\r\n            <TextView\r\n                android:id=\"@+id/userNombre\"\r\n                android:layout_width=\"wrap_content\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:layout_marginTop=\"4dp\"\r\n                android:text=\"userNombre\"\r\n                android:textColor=\"#000000\"\r\n                android:textSize=\"15sp\"\r\n                android:textStyle=\"bold\"\r\n                app:layout_constraintEnd_toEndOf=\"parent\"\r\n                app:layout_constraintStart_toStartOf=\"parent\"\r\n                app:layout_constraintTop_toBottomOf=\"@+id/userImagen\" />\r\n\r\n            <TextView\r\n                android:id=\"@+id/userEmail\"\r\n                android:layout_width=\"wrap_content\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:layout_marginBottom=\"6dp\"\r\n                android:text=\"email@domini.com\"\r\n                android:textSize=\"10sp\"\r\n                app:layout_constraintBottom_toBottomOf=\"@+id/view\"\r\n                app:layout_constraintEnd_toEndOf=\"parent\"\r\n                app:layout_constraintStart_toStartOf=\"parent\"\r\n                app:layout_constraintTop_toBottomOf=\"@+id/userNombre\"\r\n                app:layout_constraintVertical_bias=\"0.0\" />\r\n\r\n            <LinearLayout\r\n                android:layout_width=\"0dp\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:layout_marginStart=\"8dp\"\r\n                android:layout_marginTop=\"5dp\"\r\n                android:orientation=\"horizontal\"\r\n                app:layout_constraintEnd_toEndOf=\"parent\"\r\n                app:layout_constraintStart_toStartOf=\"parent\"\r\n                app:layout_constraintTop_toBottomOf=\"@+id/view\">\r\n\r\n                <TextView\r\n                    android:id=\"@+id/textViewPin\"\r\n                    android:layout_width=\"wrap_content\"\r\n                    android:layout_height=\"wrap_content\"\r\n                    android:drawableLeft=\"@drawable/ic_pin\"\r\n                    android:drawableTint=\"#000\"\r\n                    android:paddingRight=\"5dp\" />\r\n\r\n                <TextView\r\n                    android:id=\"@+id/userId\"\r\n                    android:layout_width=\"wrap_content\"\r\n                    android:layout_height=\"wrap_content\"\r\n                    android:text=\"xxx\"\r\n                    android:textSize=\"10sp\" />\r\n            </LinearLayout>\r\n\r\n        </androidx.constraintlayout.widget.ConstraintLayout>\r\n    </androidx.cardview.widget.CardView>\r\n\r\n    <androidx.cardview.widget.CardView\r\n        android:layout_width=\"0dp\"\r\n        android:layout_height=\"64dp\"\r\n        android:layout_marginStart=\"24dp\"\r\n        android:layout_marginTop=\"8dp\"\r\n        android:layout_marginEnd=\"24dp\"\r\n        app:cardCornerRadius=\"10dp\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toBottomOf=\"@+id/cardView\">\r\n\r\n        <androidx.constraintlayout.widget.ConstraintLayout\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"match_parent\">\r\n\r\n            <Button\r\n                android:id=\"@+id/btnLogout\"\r\n                android:layout_width=\"wrap_content\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:background=\"@drawable/btn_logout\"\r\n                app:drawableLeftCompat=\"@drawable/ic_logout\"\r\n                android:paddingStart=\"5dp\"\r\n                android:paddingEnd=\"5dp\"\r\n                android:text=\"Cerrar Sesión\"\r\n                android:textAllCaps=\"false\"\r\n                android:textColor=\"@color/colorWhite\"\r\n                app:layout_constraintBottom_toBottomOf=\"parent\"\r\n                app:layout_constraintEnd_toStartOf=\"@+id/btnEliminarCta\"\r\n                app:layout_constraintHorizontal_bias=\"0.5\"\r\n                app:layout_constraintStart_toStartOf=\"parent\"\r\n                app:layout_constraintTop_toTopOf=\"parent\"\r\n                app:layout_constraintVertical_bias=\"0.421\" />\r\n\r\n            <Button\r\n                android:id=\"@+id/btnEliminarCta\"\r\n                android:layout_width=\"wrap_content\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:background=\"@drawable/btn_eliminarcta\"\r\n                app:drawableLeftCompat=\"@drawable/ic_eliminar\"\r\n                android:paddingStart=\"5dp\"\r\n                android:paddingEnd=\"5dp\"\r\n                android:text=\"Eliminar Cuenta\"\r\n                android:textAllCaps=\"false\"\r\n                android:textColor=\"@color/colorWhite\"\r\n                app:layout_constraintBottom_toBottomOf=\"parent\"\r\n                app:layout_constraintEnd_toEndOf=\"parent\"\r\n                app:layout_constraintHorizontal_bias=\"0.5\"\r\n                app:layout_constraintStart_toEndOf=\"@+id/btnLogout\"\r\n                app:layout_constraintTop_toTopOf=\"parent\"\r\n                app:layout_constraintVertical_bias=\"0.421\" />\r\n        </androidx.constraintlayout.widget.ConstraintLayout>\r\n    </androidx.cardview.widget.CardView>\r\n\r\n</androidx.constraintlayout.widget.ConstraintLayout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/activity_main.xml b/app/src/main/res/layout/activity_main.xml
+--- a/app/src/main/res/layout/activity_main.xml	(revision 2fa4766e062652c946f08744d395af4b2ac0fb92)
++++ b/app/src/main/res/layout/activity_main.xml	(date 1639553740580)
+@@ -5,8 +5,7 @@
+     android:layout_width="match_parent"
+     android:layout_height="match_parent"
+     tools:context=".MainActivity"
+-    android:background="@drawable/gradiente_background"
+-    >
++    android:background="@drawable/gradiente_background">
+ 
+     <androidx.cardview.widget.CardView
+         android:id="@+id/cardView"
+Index: app/src/main/res/menu/drawer_menu.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<menu xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    tools:showIn=\"navigation_view\">\r\n\r\n    <group android:checkableBehavior=\"single\">\r\n        <item android:id=\"@+id/nav_profile\"\r\n            android:title=\"@string/menu_profile\"/>\r\n        <item android:id=\"@+id/nav_boton\"\r\n            android:title=\"@string/menu_btn\"/>\r\n        <item android:id=\"@+id/nav_code\"\r\n            android:title=\"@string/menu_code\"/>\r\n        <item android:id=\"@+id/nav_centers\"\r\n            android:title=\"@string/menu_centers\"/>\r\n        <item android:id=\"@+id/nav_contact\"\r\n            android:title=\"@string/menu_contact\"/>\r\n        <item android:id=\"@+id/nav_help\"\r\n            android:title=\"@string/menu_help\"/>\r\n        <item android:id=\"@+id/nav_rate\"\r\n            android:title=\"@string/menu_rate\"/>\r\n    </group>\r\n\r\n</menu>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/menu/drawer_menu.xml b/app/src/main/res/menu/drawer_menu.xml
+--- a/app/src/main/res/menu/drawer_menu.xml	(revision 2fa4766e062652c946f08744d395af4b2ac0fb92)
++++ b/app/src/main/res/menu/drawer_menu.xml	(date 1639558379166)
+@@ -18,6 +18,8 @@
+             android:title="@string/menu_help"/>
+         <item android:id="@+id/nav_rate"
+             android:title="@string/menu_rate"/>
++        <item android:id="@+id/nav_sesion"
++            android:title="@string/menu_sesion"/>
+     </group>
+ 
+ </menu>
+\ No newline at end of file
+Index: .idea/misc.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"DesignSurface\">\r\n    <option name=\"filePathToZoomLevelMap\">\r\n      <map>\r\n        <entry key=\"..\\:/Android/HealthCore/app/src/main/res/drawable/gradiente_background.xml\" value=\"0.14342105263157895\" />\r\n        <entry key=\"..\\:/Android/HealthCore/app/src/main/res/layout/activity_calificanos.xml\" value=\"0.1\" />\r\n        <entry key=\"..\\:/Android/HealthCore/app/src/main/res/layout/activity_contacto.xml\" value=\"0.371875\" />\r\n        <entry key=\"..\\:/Android/HealthCore/app/src/main/res/layout/activity_login.xml\" value=\"0.20885416666666667\" />\r\n        <entry key=\"..\\:/Android/HealthCore/app/src/main/res/layout/activity_main.xml\" value=\"0.20885416666666667\" />\r\n        <entry key=\"..\\:/Android/HealthCore/app/src/main/res/layout/activity_perfil.xml\" value=\"0.371875\" />\r\n        <entry key=\"..\\:/Android/HealthCore/app/src/main/res/layout/activity_preguntas_frecuentes.xml\" value=\"0.371875\" />\r\n        <entry key=\"..\\:/Android/HealthCore/app/src/main/res/layout/activity_qr_cliente.xml\" value=\"0.33\" />\r\n        <entry key=\"..\\:/Android/HealthCore/app/src/main/res/layout/activity_register.xml\" value=\"0.20885416666666667\" />\r\n        <entry key=\"..\\:/Android/HealthCore/app/src/main/res/layout/activity_splash_screen.xml\" value=\"0.371875\" />\r\n        <entry key=\"..\\:/Android/HealthCore/app/src/main/res/layout/fragment_centers.xml\" value=\"0.371875\" />\r\n        <entry key=\"..\\:/Android/HealthCore/app/src/main/res/layout/fragment_code.xml\" value=\"0.371875\" />\r\n        <entry key=\"..\\:/Android/HealthCore/app/src/main/res/layout/fragment_contact.xml\" value=\"0.371875\" />\r\n        <entry key=\"..\\:/Android/HealthCore/app/src/main/res/layout/fragment_dashboard.xml\" value=\"0.371875\" />\r\n        <entry key=\"..\\:/Android/HealthCore/app/src/main/res/layout/fragment_help.xml\" value=\"0.371875\" />\r\n        <entry key=\"..\\:/Android/HealthCore/app/src/main/res/layout/fragment_home.xml\" value=\"0.371875\" />\r\n        <entry key=\"..\\:/Android/HealthCore/app/src/main/res/layout/fragment_profile.xml\" value=\"0.371875\" />\r\n        <entry key=\"..\\:/Android/HealthCore/app/src/main/res/layout/fragment_profile2.xml\" value=\"0.2\" />\r\n        <entry key=\"..\\:/Android/HealthCore/app/src/main/res/layout/fragment_rate.xml\" value=\"0.371875\" />\r\n        <entry key=\"..\\:/Android/HealthCore/app/src/main/res/layout/menu.xml\" value=\"0.371875\" />\r\n        <entry key=\"..\\:/Android/HealthCore/app/src/main/res/layout/nav_header.xml\" value=\"0.371875\" />\r\n        <entry key=\"..\\:/Android/HealthCore/app/src/main/res/menu/drawer_menu.xml\" value=\"0.20885416666666667\" />\r\n        <entry key=\"..\\:/Android/HealthCore/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml\" value=\"0.14342105263157895\" />\r\n        <entry key=\"..\\:/Users/MenaEureka/HealthCore/app/src/main/res/drawable/splash_background.xml\" value=\"0.37864583333333335\" />\r\n        <entry key=\"..\\:/Users/MenaEureka/HealthCore/app/src/main/res/layout-land/fragment_contact.xml\" value=\"0.33\" />\r\n        <entry key=\"..\\:/Users/MenaEureka/HealthCore/app/src/main/res/layout/activity_splash_screen.xml\" value=\"0.3625\" />\r\n        <entry key=\"..\\:/Users/MenaEureka/HealthCore/app/src/main/res/layout/custom_list.xml\" value=\"0.22\" />\r\n        <entry key=\"..\\:/Users/MenaEureka/HealthCore/app/src/main/res/layout/fragment_contact.xml\" value=\"0.3625\" />\r\n        <entry key=\"..\\:/Users/MenaEureka/HealthCore/app/src/main/res/layout/fragment_help.xml\" value=\"0.5\" />\r\n        <entry key=\"..\\:/Users/MenaEureka/HealthCore/app/src/main/res/layout/fragment_rate.xml\" value=\"0.3625\" />\r\n        <entry key=\"..\\:/Users/sergi/Downloads/HealthCore/app/src/main/res/drawable-v21/ic_menu_camera.xml\" value=\"0.13802083333333334\" />\r\n        <entry key=\"..\\:/Users/sergi/Downloads/HealthCore/app/src/main/res/drawable/gradiente_background.xml\" value=\"0.24074074074074073\" />\r\n        <entry key=\"..\\:/Users/sergi/Downloads/HealthCore/app/src/main/res/drawable/side_nav_bar.xml\" value=\"0.3828125\" />\r\n        <entry key=\"..\\:/Users/sergi/Downloads/HealthCore/app/src/main/res/drawable/splash_background.xml\" value=\"0.3828125\" />\r\n        <entry key=\"..\\:/Users/sergi/Downloads/HealthCore/app/src/main/res/layout/activity_login.xml\" value=\"0.36666666666666664\" />\r\n        <entry key=\"..\\:/Users/sergi/Downloads/HealthCore/app/src/main/res/layout/activity_main.xml\" value=\"0.36666666666666664\" />\r\n        <entry key=\"..\\:/Users/sergi/Downloads/HealthCore/app/src/main/res/layout/activity_menu.xml\" value=\"0.36666666666666664\" />\r\n        <entry key=\"..\\:/Users/sergi/Downloads/HealthCore/app/src/main/res/layout/activity_perfil.xml\" value=\"0.36666666666666664\" />\r\n        <entry key=\"..\\:/Users/sergi/Downloads/HealthCore/app/src/main/res/layout/activity_qr_cliente.xml\" value=\"0.36666666666666664\" />\r\n        <entry key=\"..\\:/Users/sergi/Downloads/HealthCore/app/src/main/res/layout/activity_register.xml\" value=\"0.18034447821681865\" />\r\n        <entry key=\"..\\:/Users/sergi/Downloads/HealthCore/app/src/main/res/layout/activity_splash_screen.xml\" value=\"0.1\" />\r\n        <entry key=\"..\\:/Users/sergi/Downloads/HealthCore/app/src/main/res/layout/app_bar_menu.xml\" value=\"0.36666666666666664\" />\r\n        <entry key=\"..\\:/Users/sergi/Downloads/HealthCore/app/src/main/res/layout/content_menu.xml\" value=\"0.36666666666666664\" />\r\n        <entry key=\"..\\:/Users/sergi/Downloads/HealthCore/app/src/main/res/layout/fragment_centers.xml\" value=\"0.23324275362318841\" />\r\n        <entry key=\"..\\:/Users/sergi/Downloads/HealthCore/app/src/main/res/layout/fragment_code.xml\" value=\"0.23324275362318841\" />\r\n        <entry key=\"..\\:/Users/sergi/Downloads/HealthCore/app/src/main/res/layout/fragment_contact.xml\" value=\"0.23324275362318841\" />\r\n        <entry key=\"..\\:/Users/sergi/Downloads/HealthCore/app/src/main/res/layout/fragment_gallery.xml\" value=\"0.36666666666666664\" />\r\n        <entry key=\"..\\:/Users/sergi/Downloads/HealthCore/app/src/main/res/layout/fragment_help.xml\" value=\"0.23324275362318841\" />\r\n        <entry key=\"..\\:/Users/sergi/Downloads/HealthCore/app/src/main/res/layout/fragment_home.xml\" value=\"0.36666666666666664\" />\r\n        <entry key=\"..\\:/Users/sergi/Downloads/HealthCore/app/src/main/res/layout/fragment_profile.xml\" value=\"0.36666666666666664\" />\r\n        <entry key=\"..\\:/Users/sergi/Downloads/HealthCore/app/src/main/res/layout/fragment_profile2.xml\" value=\"0.36666666666666664\" />\r\n        <entry key=\"..\\:/Users/sergi/Downloads/HealthCore/app/src/main/res/layout/fragment_rate.xml\" value=\"0.23324275362318841\" />\r\n        <entry key=\"..\\:/Users/sergi/Downloads/HealthCore/app/src/main/res/layout/fragment_slideshow.xml\" value=\"0.36666666666666664\" />\r\n        <entry key=\"..\\:/Users/sergi/Downloads/HealthCore/app/src/main/res/layout/menu.xml\" value=\"0.5\" />\r\n        <entry key=\"..\\:/Users/sergi/Downloads/HealthCore/app/src/main/res/layout/nav_header.xml\" value=\"0.33\" />\r\n        <entry key=\"..\\:/Users/sergi/Downloads/HealthCore/app/src/main/res/layout/nav_header_menu.xml\" value=\"0.36666666666666664\" />\r\n        <entry key=\"..\\:/Users/sergi/Downloads/HealthCore/app/src/main/res/menu/activity_main_drawer.xml\" value=\"0.36666666666666664\" />\r\n        <entry key=\"..\\:/Users/sergi/Downloads/HealthCore/app/src/main/res/menu/drawer_menu.xml\" value=\"0.36666666666666664\" />\r\n        <entry key=\"..\\:/Users/sergi/Downloads/HealthCore/app/src/main/res/menu/menu.xml\" value=\"0.36666666666666664\" />\r\n      </map>\r\n    </option>\r\n  </component>\r\n  <component name=\"ProjectRootManager\" version=\"2\" languageLevel=\"JDK_11\" default=\"true\" project-jdk-name=\"Android Studio default JDK\" project-jdk-type=\"JavaSDK\">\r\n    <output url=\"file://$PROJECT_DIR$/build/classes\" />\r\n  </component>\r\n  <component name=\"ProjectType\">\r\n    <option name=\"id\" value=\"Android\" />\r\n  </component>\r\n  <component name=\"masterDetails\">\r\n    <states>\r\n      <state key=\"ProjectJDKs.UI\">\r\n        <settings>\r\n          <last-edited>1.8</last-edited>\r\n          <splitter-proportions>\r\n            <option name=\"proportions\">\r\n              <list>\r\n                <option value=\"0.2\" />\r\n              </list>\r\n            </option>\r\n          </splitter-proportions>\r\n        </settings>\r\n      </state>\r\n    </states>\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/misc.xml b/.idea/misc.xml
+--- a/.idea/misc.xml	(revision 2fa4766e062652c946f08744d395af4b2ac0fb92)
++++ b/.idea/misc.xml	(date 1639567514372)
+@@ -37,6 +37,7 @@
+         <entry key="..\:/Users/sergi/Downloads/HealthCore/app/src/main/res/drawable/gradiente_background.xml" value="0.24074074074074073" />
+         <entry key="..\:/Users/sergi/Downloads/HealthCore/app/src/main/res/drawable/side_nav_bar.xml" value="0.3828125" />
+         <entry key="..\:/Users/sergi/Downloads/HealthCore/app/src/main/res/drawable/splash_background.xml" value="0.3828125" />
++        <entry key="..\:/Users/sergi/Downloads/HealthCore/app/src/main/res/layout-land/activity_login.xml" value="0.21" />
+         <entry key="..\:/Users/sergi/Downloads/HealthCore/app/src/main/res/layout/activity_login.xml" value="0.36666666666666664" />
+         <entry key="..\:/Users/sergi/Downloads/HealthCore/app/src/main/res/layout/activity_main.xml" value="0.36666666666666664" />
+         <entry key="..\:/Users/sergi/Downloads/HealthCore/app/src/main/res/layout/activity_menu.xml" value="0.36666666666666664" />
+Index: app/src/main/res/layout-land/activity_login.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout-land/activity_login.xml b/app/src/main/res/layout-land/activity_login.xml
+new file mode 100644
+--- /dev/null	(date 1639563705931)
++++ b/app/src/main/res/layout-land/activity_login.xml	(date 1639563705931)
+@@ -0,0 +1,137 @@
++<?xml version="1.0" encoding="utf-8"?>
++<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
++    xmlns:app="http://schemas.android.com/apk/res-auto"
++    xmlns:tools="http://schemas.android.com/tools"
++    android:layout_width="match_parent"
++    android:layout_height="match_parent"
++    android:background="@drawable/gradiente_background"
++    tools:context=".loginActivity">
++
++
++    <ImageView
++        android:id="@+id/imageView"
++        android:layout_width="216dp"
++        android:layout_height="145dp"
++        app:layout_constraintBottom_toTopOf="@+id/logo"
++        app:layout_constraintEnd_toEndOf="parent"
++        app:layout_constraintHorizontal_bias="0.031"
++        app:layout_constraintStart_toStartOf="parent"
++        app:layout_constraintTop_toTopOf="parent"
++        app:layout_constraintVertical_bias="0.0"
++        app:srcCompat="@drawable/icono_v4" />
++
++    <TextView
++        android:id="@+id/logo"
++        android:layout_width="wrap_content"
++        android:layout_height="wrap_content"
++        android:text="Login"
++        android:textColor="@color/colorWhite"
++        android:textSize="36sp"
++        android:textStyle="bold"
++        app:layout_constraintBottom_toBottomOf="parent"
++        app:layout_constraintEnd_toEndOf="parent"
++        app:layout_constraintHorizontal_bias="0.499"
++        app:layout_constraintStart_toStartOf="parent"
++        app:layout_constraintTop_toTopOf="parent"
++        app:layout_constraintVertical_bias="0.085" />
++
++    <EditText
++        android:id="@+id/inputPassword"
++        android:layout_width="0dp"
++        android:layout_height="wrap_content"
++        android:layout_marginTop="16dp"
++        android:background="@drawable/input_bg"
++        app:drawableLeftCompat="@drawable/ic_security"
++        android:drawablePadding="10dp"
++        android:ems="10"
++        android:hint="Password"
++        android:inputType="textPassword"
++        android:paddingLeft="20dp"
++        android:paddingTop="10dp"
++        android:paddingRight="10dp"
++        android:paddingBottom="10dp"
++        android:textColor="@color/colorWhite"
++        android:textColorHint="@color/colorWhite"
++        app:layout_constraintEnd_toEndOf="@+id/inputEmail"
++        app:layout_constraintHorizontal_bias="1.0"
++        app:layout_constraintStart_toStartOf="@+id/inputEmail"
++        app:layout_constraintTop_toBottomOf="@+id/inputEmail" />
++
++    <EditText
++        android:id="@+id/inputEmail"
++        android:layout_width="0dp"
++        android:layout_height="wrap_content"
++        android:layout_marginStart="32dp"
++        android:layout_marginTop="64dp"
++        android:layout_marginEnd="32dp"
++        android:background="@drawable/input_bg"
++        app:drawableLeftCompat="@drawable/ic_email"
++        android:drawablePadding="10dp"
++        android:ems="10"
++        android:hint="Email"
++        android:inputType="textEmailAddress"
++        android:paddingLeft="20dp"
++        android:paddingTop="10dp"
++        android:paddingRight="10dp"
++        android:paddingBottom="10dp"
++        android:textColor="@color/colorWhite"
++        android:textColorHint="@color/colorWhite"
++        app:layout_constraintEnd_toEndOf="parent"
++        app:layout_constraintHorizontal_bias="0.0"
++        app:layout_constraintStart_toStartOf="parent"
++        app:layout_constraintTop_toBottomOf="@+id/logo" />
++
++    <TextView
++        android:id="@+id/forgotPassword"
++        android:layout_width="wrap_content"
++        android:layout_height="wrap_content"
++        android:layout_marginTop="16dp"
++        android:text="Olvido su Clave?"
++        android:textColor="@color/colorWhite"
++        android:textSize="18sp"
++        android:textStyle="bold"
++        app:layout_constraintEnd_toEndOf="@+id/inputPassword"
++        app:layout_constraintTop_toBottomOf="@+id/inputPassword" />
++
++    <Button
++        android:id="@+id/btnlogin"
++        android:layout_width="0dp"
++        android:layout_height="wrap_content"
++        android:layout_marginTop="24dp"
++        android:text="Login"
++        app:layout_constraintEnd_toEndOf="@+id/inputPassword"
++        app:layout_constraintStart_toStartOf="@+id/inputPassword"
++        app:layout_constraintTop_toBottomOf="@+id/forgotPassword" />
++
++    <LinearLayout
++        android:id="@+id/linearLayout"
++        android:layout_width="0dp"
++        android:layout_height="wrap_content"
++        android:layout_marginTop="16dp"
++        android:gravity="center"
++        android:orientation="horizontal"
++        android:textAlignment="center"
++        app:layout_constraintEnd_toEndOf="@+id/btnlogin"
++        app:layout_constraintHorizontal_bias="0.0"
++        app:layout_constraintStart_toStartOf="@+id/btnlogin"
++        app:layout_constraintTop_toBottomOf="@+id/btnlogin">
++
++        <TextView
++            android:layout_width="wrap_content"
++            android:layout_height="wrap_content"
++            android:text="No tiene una cuenta?"
++            android:textColor="@color/colorWhite" />
++
++        <TextView
++            android:id="@+id/txtNotieneCuenta"
++            android:layout_width="wrap_content"
++            android:layout_height="wrap_content"
++            android:layout_marginStart="10dp"
++            android:text="Registrese"
++            android:textStyle="bold"
++            android:textColor="@color/colorWhite" />
++
++    </LinearLayout>
++
++
++</androidx.constraintlayout.widget.ConstraintLayout>
+Index: app/src/main/res/layout/fragment_centers.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<RelativeLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    android:background=\"#92CAE5E6\">\r\n\r\n    <TextView\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"/>\r\n\r\n</RelativeLayout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/fragment_centers.xml b/app/src/main/res/layout/fragment_centers.xml
+--- a/app/src/main/res/layout/fragment_centers.xml	(revision 2fa4766e062652c946f08744d395af4b2ac0fb92)
++++ b/app/src/main/res/layout/fragment_centers.xml	(date 1639562016015)
+@@ -1,11 +1,157 @@
+ <?xml version="1.0" encoding="utf-8"?>
+-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
++<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
++    xmlns:app="http://schemas.android.com/apk/res-auto"
++    xmlns:tools="http://schemas.android.com/tools"
+     android:layout_width="match_parent"
+     android:layout_height="match_parent"
+-    android:background="#92CAE5E6">
++    tools:context=".MainActivity"
++    android:background="@drawable/gradiente_background">
++
++    <androidx.cardview.widget.CardView
++        android:id="@+id/cardView"
++        android:layout_width="0dp"
++        android:layout_height="250dp"
++        android:layout_marginStart="24dp"
++        android:layout_marginTop="8dp"
++        android:layout_marginEnd="24dp"
++        app:cardBackgroundColor="#FFFFFF"
++        app:cardCornerRadius="10dp"
++        app:layout_constraintEnd_toEndOf="parent"
++        app:layout_constraintStart_toStartOf="parent"
++        app:layout_constraintTop_toTopOf="parent">
++
++        <androidx.constraintlayout.widget.ConstraintLayout
++            android:layout_width="match_parent"
++            android:layout_height="match_parent">
++
++            <de.hdodenhof.circleimageview.CircleImageView
++                android:id="@+id/userImagen"
++                android:layout_width="150dp"
++                android:layout_height="150dp"
++                android:layout_margin="16dp"
++                android:layout_marginTop="56dp"
++                android:src="@drawable/userimg"
++                app:layout_constraintEnd_toEndOf="parent"
++                app:layout_constraintStart_toStartOf="parent"
++                app:layout_constraintTop_toTopOf="parent" />
++
++            <View
++                android:id="@+id/view"
++                android:layout_width="wrap_content"
++                android:layout_height="2dp"
++                android:layout_marginTop="40dp"
++                android:background="#353535"
++                app:layout_constraintEnd_toEndOf="parent"
++                app:layout_constraintHorizontal_bias="0.0"
++                app:layout_constraintStart_toStartOf="parent"
++                app:layout_constraintTop_toBottomOf="@+id/userImagen" />
++
++            <TextView
++                android:id="@+id/userNombre"
++                android:layout_width="wrap_content"
++                android:layout_height="wrap_content"
++                android:layout_marginTop="4dp"
++                android:text="userNombre"
++                android:textColor="#000000"
++                android:textSize="15sp"
++                android:textStyle="bold"
++                app:layout_constraintEnd_toEndOf="parent"
++                app:layout_constraintStart_toStartOf="parent"
++                app:layout_constraintTop_toBottomOf="@+id/userImagen" />
+ 
+-    <TextView
+-        android:layout_width="wrap_content"
+-        android:layout_height="wrap_content"/>
++            <TextView
++                android:id="@+id/userEmail"
++                android:layout_width="wrap_content"
++                android:layout_height="wrap_content"
++                android:layout_marginBottom="6dp"
++                android:text="email@domini.com"
++                android:textSize="10sp"
++                app:layout_constraintBottom_toBottomOf="@+id/view"
++                app:layout_constraintEnd_toEndOf="parent"
++                app:layout_constraintStart_toStartOf="parent"
++                app:layout_constraintTop_toBottomOf="@+id/userNombre"
++                app:layout_constraintVertical_bias="0.0" />
++
++            <LinearLayout
++                android:layout_width="0dp"
++                android:layout_height="wrap_content"
++                android:layout_marginStart="8dp"
++                android:layout_marginTop="5dp"
++                android:orientation="horizontal"
++                app:layout_constraintEnd_toEndOf="parent"
++                app:layout_constraintStart_toStartOf="parent"
++                app:layout_constraintTop_toBottomOf="@+id/view">
++
++                <TextView
++                    android:id="@+id/textViewPin"
++                    android:layout_width="wrap_content"
++                    android:layout_height="wrap_content"
++                    android:drawableLeft="@drawable/ic_pin"
++                    android:drawableTint="#000"
++                    android:paddingRight="5dp" />
++
++                <TextView
++                    android:id="@+id/userId"
++                    android:layout_width="wrap_content"
++                    android:layout_height="wrap_content"
++                    android:text="xxx"
++                    android:textSize="10sp" />
++            </LinearLayout>
++
++        </androidx.constraintlayout.widget.ConstraintLayout>
++    </androidx.cardview.widget.CardView>
++
++    <androidx.cardview.widget.CardView
++        android:layout_width="0dp"
++        android:layout_height="64dp"
++        android:layout_marginStart="24dp"
++        android:layout_marginTop="8dp"
++        android:layout_marginEnd="24dp"
++        app:cardCornerRadius="10dp"
++        app:layout_constraintEnd_toEndOf="parent"
++        app:layout_constraintStart_toStartOf="parent"
++        app:layout_constraintTop_toBottomOf="@+id/cardView">
++
++        <androidx.constraintlayout.widget.ConstraintLayout
++            android:layout_width="match_parent"
++            android:layout_height="match_parent">
++
++            <Button
++                android:id="@+id/btnLogout"
++                android:layout_width="wrap_content"
++                android:layout_height="wrap_content"
++                android:background="@drawable/btn_logout"
++                app:drawableLeftCompat="@drawable/ic_logout"
++                android:paddingStart="5dp"
++                android:paddingEnd="5dp"
++                android:text="Cerrar Sesión"
++                android:textAllCaps="false"
++                android:textColor="@color/colorWhite"
++                app:layout_constraintBottom_toBottomOf="parent"
++                app:layout_constraintEnd_toStartOf="@+id/btnEliminarCta"
++                app:layout_constraintHorizontal_bias="0.5"
++                app:layout_constraintStart_toStartOf="parent"
++                app:layout_constraintTop_toTopOf="parent"
++                app:layout_constraintVertical_bias="0.421" />
++
++            <Button
++                android:id="@+id/btnEliminarCta"
++                android:layout_width="wrap_content"
++                android:layout_height="wrap_content"
++                android:background="@drawable/btn_eliminarcta"
++                app:drawableLeftCompat="@drawable/ic_eliminar"
++                android:paddingStart="5dp"
++                android:paddingEnd="5dp"
++                android:text="Eliminar Cuenta"
++                android:textAllCaps="false"
++                android:textColor="@color/colorWhite"
++                app:layout_constraintBottom_toBottomOf="parent"
++                app:layout_constraintEnd_toEndOf="parent"
++                app:layout_constraintHorizontal_bias="0.5"
++                app:layout_constraintStart_toEndOf="@+id/btnLogout"
++                app:layout_constraintTop_toTopOf="parent"
++                app:layout_constraintVertical_bias="0.421" />
++        </androidx.constraintlayout.widget.ConstraintLayout>
++    </androidx.cardview.widget.CardView>
+ 
+-</RelativeLayout>
+\ No newline at end of file
++</androidx.constraintlayout.widget.ConstraintLayout>
+\ No newline at end of file
+Index: app/src/main/res/values-en/strings.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<resources>\r\n    <string name=\"app_name\">HealthCore</string>\r\n    <string name=\"title_activity_menu\">Menu</string>\r\n    <string name=\"navigation_drawer_open\">Open navigation drawer</string>\r\n    <string name=\"navigation_drawer_close\">Close navigation drawer</string>\r\n    <string name=\"nav_header_title\">Android Studio</string>\r\n    <string name=\"nav_header_subtitle\">android.studio@android.com</string>\r\n    <string name=\"nav_header_desc\">Navigation header</string>\r\n    <string name=\"action_settings\">Settings</string>\r\n    <string name=\"menu_profile\">Profile</string>\r\n    <string name=\"menu_btn\">Emergency Button</string>\r\n    <string name=\"menu_code\">QR Code</string>\r\n    <string name=\"menu_centers\">Medical centers</string>\r\n    <string name=\"menu_contact\">Contact</string>\r\n    <string name=\"menu_help\">Help</string>\r\n    <string name=\"menu_rate\">Rate us</string>\r\n    <string name=\"hello_blank_fragment\">Hello blank fragment</string>\r\n    <string name=\"menu_username\">Username</string>\r\n    <string name=\"menu_email\">Email</string>\r\n    <string name=\"Titulo_Codigo_QR\">QR CODE</string>\r\n    <string name=\"Codigo_QR_Aviso\">Your QR Code is private, do not share it with nobody just with your family and medical stuff qualified. </string>\r\n    <string name=\"txt_boton_codigo_qr\">Share</string>\r\n    <string name=\"txt_emergency_button\">¡Emmergency Button!</string>\r\n    <string name=\"title_activity_contacto\">Contact</string>\r\n    <string name=\"title_home\">Home</string>\r\n    <string name=\"title_dashboard\">Dashboard</string>\r\n    <string name=\"title_notifications\">Notifications</string>\r\n    <string name=\"jesus_nombre\">Jesús Rangel Díaz</string>\r\n    <string name=\"jesus_correo\">jesusrangeldiaz155@gmail.com</string>\r\n    <string name=\"ximena_nombre\">Ximena Velasco Vázquez</string>\r\n    <string name=\"ximena_correo\">adm15velascoximena@gmail.com</string>\r\n    <string name=\"alan_nombre\">Sergio Alan Salinas Rodríguez</string>\r\n    <string name=\"alan_correo\">alansalinas25@gmail.com</string>\r\n    <string name=\"karen_nombre\">Karen Jazmín Suárez Ríos</string>\r\n    <string name=\"karen_correo\">jazminsuari@gmail.com</string>\r\n    <string name=\"valoracion_titulo\">Rate our App!</string>\r\n    <string name=\"valoracion_comentario\">Write a comment...</string>\r\n    <string name=\"btn_enviar_valoracion\">SEND</string>\r\n    <string name=\"nombre_paciente_perfil\">Cristian Salas</string>\r\n    <string name=\"enfermedad_cronica_perfil\">Chronic diabetes</string>\r\n    <string name=\"num_operaciones_perfil\">2 surgeries</string>\r\n    <string name=\"ultima_revision_perfil\">Last Medical Visit</string>\r\n    <string-array name=\"Preguntas\">\r\n        <item>How to use the app in an emergency situation?</item>\r\n        <item>What is the QR Code used for?</item>\r\n        <item>How do I make my medical record?</item>\r\n        <item>How does the app relate to my health center?</item>\r\n        <item>Can I consult a physician for information?</item>\r\n    </string-array>\r\n    <string-array name=\"Respuesta1\">\r\n        <item>If you have an emergency and you have previously filled out your medical record, just go to the home screen, press the red emergency button, verify your situation and a notification is automatically sent to the nearest health center, providing ambulance service to the address entered.</item>\r\n    </string-array>\r\n    <string-array name=\"Respuesta2\">\r\n        <item>El código QR permite almacenar tu información médica, en caso de que presentes un accidente, este puede ser escaneado por alguien más para brindarte servicios de forma más rápida y eficaz</item>\r\n    </string-array>\r\n    <string-array name=\"Respuesta3\">\r\n        <item>En el apartado de tu perfil, podrás modificar tu expediente contestando las preguntas disponibles</item>\r\n    </string-array>\r\n    <string-array name=\"Respuesta4\">\r\n        <item>Al presionar el botón de emergencia que tienes disponible en la app, este manda una alerta a tu centro de salud, permitiendo brindarte servicio de ambulancia para que tu caso pueda ser atendido rápidamente</item>\r\n    </string-array>\r\n    <string-array name=\"Respuesta5\">\r\n        <item>La app no está enfocada en brindarte servicio directo con algún médico en particular, sino que permite mejorar las emergencias en los centros de salud y sociedad</item>\r\n    </string-array>\r\n    <string name=\"hacer_pregunta\">Ask a question...</string>\r\n    <string name=\"btn_enviar_pregunta\">SEND</string>\r\n    <string name=\"scan\">Scan</string>\r\n    <string name=\"textViewPreguntas\">Preguntas más frecuentes de la app</string>\r\n    <string name=\"textViewRespuestas\">Answers</string>\r\n</resources>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/values-en/strings.xml b/app/src/main/res/values-en/strings.xml
+--- a/app/src/main/res/values-en/strings.xml	(revision 2fa4766e062652c946f08744d395af4b2ac0fb92)
++++ b/app/src/main/res/values-en/strings.xml	(date 1639557977944)
+@@ -68,4 +68,5 @@
+     <string name="scan">Scan</string>
+     <string name="textViewPreguntas">Preguntas más frecuentes de la app</string>
+     <string name="textViewRespuestas">Answers</string>
++    <string name="menu_sesion">Account</string>
+ </resources>
+\ No newline at end of file
+Index: app/src/main/res/layout/fragment_profile2.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<androidx.constraintlayout.widget.ConstraintLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    android:background=\"#92CAE5E6\"\r\n    tools:context=\".ui.ProfileFragment2\">\r\n\r\n    <LinearLayout\r\n        android:id=\"@+id/linearLayout\"\r\n        android:layout_width=\"411dp\"\r\n        android:layout_height=\"44dp\"\r\n        android:layout_alignParentStart=\"true\"\r\n        android:layout_alignParentTop=\"true\"\r\n        android:layout_alignParentEnd=\"true\"\r\n        android:background=\"#04646E\"\r\n        android:orientation=\"horizontal\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        tools:ignore=\"MissingConstraints\"\r\n        tools:layout_editor_absoluteY=\"-1dp\">\r\n\r\n        <TextView\r\n            android:id=\"@+id/textView13\"\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"60dp\"\r\n            android:layout_centerHorizontal=\"true\"\r\n            android:layout_weight=\"1\"\r\n            android:fontFamily=\"serif\"\r\n            android:text=\"PERFIL\"\r\n            android:textAlignment=\"center\"\r\n            android:textColor=\"#7ACFC7\"\r\n            android:textSize=\"34sp\"\r\n            android:textStyle=\"bold\" />\r\n    </LinearLayout>\r\n\r\n    <ImageView\r\n        android:id=\"@+id/imageView5\"\r\n        android:layout_width=\"145dp\"\r\n        android:layout_height=\"135dp\"\r\n        android:layout_alignParentStart=\"true\"\r\n        android:layout_alignParentTop=\"true\"\r\n        android:layout_centerHorizontal=\"true\"\r\n        android:src=\"@drawable/avatar\"\r\n        app:layout_constraintBottom_toBottomOf=\"parent\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toBottomOf=\"@+id/linearLayout\"\r\n        app:layout_constraintVertical_bias=\"0.007\" />\r\n\r\n    <TextView\r\n        android:id=\"@+id/textViewDatosPersonales\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_marginBottom=\"24dp\"\r\n        android:fontFamily=\"cursive\"\r\n        android:lineSpacingExtra=\"8sp\"\r\n        android:text=\"Datos Personales\"\r\n        android:textColor=\"#14734A\"\r\n        android:textSize=\"20sp\"\r\n        android:textStyle=\"bold\"\r\n        app:layout_constraintBottom_toTopOf=\"@+id/textView22\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintHorizontal_bias=\"0.056\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toTopOf=\"parent\"\r\n        app:layout_constraintVertical_bias=\"1.0\" />\r\n\r\n    <TextView\r\n        android:id=\"@+id/textView22\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_below=\"@+id/textViewDatosPersonales\"\r\n        android:layout_alignParentStart=\"true\"\r\n        android:layout_marginStart=\"20dp\"\r\n        android:layout_marginTop=\"20dp\"\r\n        android:fontFamily=\"sans-serif-condensed-medium\"\r\n        android:text=\"Nombre:\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toBottomOf=\"@+id/imageView5\" />\r\n\r\n    <androidx.appcompat.widget.AppCompatEditText\r\n        android:id=\"@+id/ApeMatET\"\r\n        android:layout_width=\"264dp\"\r\n        android:layout_height=\"32dp\"\r\n        android:layout_marginEnd=\"4dp\"\r\n        android:fontFamily=\"sans-serif-light\"\r\n        android:hint=\"Ingrese su segundo apellido\"\r\n        android:textSize=\"12sp\"\r\n        android:textStyle=\"bold\"\r\n        app:layout_constraintBaseline_toBaselineOf=\"@+id/textView24\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintHorizontal_bias=\"0.187\"\r\n        app:layout_constraintStart_toEndOf=\"@+id/textView24\"\r\n        tools:ignore=\"MissingConstraints\">\r\n\r\n    </androidx.appcompat.widget.AppCompatEditText>\r\n\r\n    <TextView\r\n        android:id=\"@+id/textView24\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_below=\"@+id/textView23\"\r\n        android:layout_alignParentStart=\"true\"\r\n        android:layout_marginStart=\"12dp\"\r\n        android:layout_marginTop=\"36dp\"\r\n        android:fontFamily=\"sans-serif-condensed-medium\"\r\n        android:text=\"Apellido Materno:\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toBottomOf=\"@+id/textView23\" />\r\n\r\n    <androidx.appcompat.widget.AppCompatEditText\r\n        android:id=\"@+id/AgeET\"\r\n        android:layout_width=\"186dp\"\r\n        android:layout_height=\"38dp\"\r\n        android:layout_centerHorizontal=\"true\"\r\n        android:layout_centerVertical=\"true\"\r\n        android:fontFamily=\"sans-serif-light\"\r\n        android:hint=\"Ingrese su edad en número\"\r\n        android:textSize=\"12sp\"\r\n        android:textStyle=\"bold\"\r\n        app:layout_constraintBaseline_toBaselineOf=\"@+id/textView25\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintHorizontal_bias=\"0.0\"\r\n        app:layout_constraintStart_toEndOf=\"@+id/textView25\"\r\n        tools:ignore=\"MissingConstraints\">\r\n\r\n    </androidx.appcompat.widget.AppCompatEditText>\r\n\r\n    <TextView\r\n        android:id=\"@+id/textView26\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_below=\"@+id/textView25\"\r\n        android:layout_alignParentStart=\"true\"\r\n        android:layout_alignParentBottom=\"true\"\r\n        android:layout_marginStart=\"20dp\"\r\n        android:layout_marginTop=\"36dp\"\r\n        android:fontFamily=\"sans-serif-condensed-medium\"\r\n        android:text=\"Sexo:\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toBottomOf=\"@+id/textView25\" />\r\n\r\n    <androidx.appcompat.widget.AppCompatEditText\r\n        android:id=\"@+id/SexoET\"\r\n        android:layout_width=\"186dp\"\r\n        android:layout_height=\"38dp\"\r\n        android:layout_centerHorizontal=\"true\"\r\n        android:layout_centerVertical=\"true\"\r\n        android:fontFamily=\"sans-serif-light\"\r\n        android:hint=\"Ingrese su sexo\"\r\n        android:inputType=\"text\"\r\n        android:textSize=\"12sp\"\r\n        android:textStyle=\"bold\"\r\n        app:layout_constraintBaseline_toBaselineOf=\"@+id/textView26\"\r\n        tools:ignore=\"MissingConstraints\"\r\n        tools:layout_editor_absoluteX=\"51dp\">\r\n\r\n    </androidx.appcompat.widget.AppCompatEditText>\r\n\r\n    <TextView\r\n        android:id=\"@+id/textView25\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_below=\"@+id/textView24\"\r\n        android:layout_alignParentStart=\"true\"\r\n        android:layout_marginStart=\"20dp\"\r\n        android:layout_marginTop=\"32dp\"\r\n        android:fontFamily=\"sans-serif-condensed-medium\"\r\n        android:text=\"Edad:\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toBottomOf=\"@+id/textView24\" />\r\n\r\n    <androidx.appcompat.widget.AppCompatEditText\r\n        android:id=\"@+id/NombreET\"\r\n        android:layout_width=\"315dp\"\r\n        android:layout_height=\"39dp\"\r\n        android:fontFamily=\"sans-serif-light\"\r\n        android:hint=\"Ingrese su nombre (s)\"\r\n        android:textSize=\"12sp\"\r\n        android:textStyle=\"bold\"\r\n        app:layout_constraintBaseline_toBaselineOf=\"@+id/textView22\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintHorizontal_bias=\"0.0\"\r\n        app:layout_constraintStart_toEndOf=\"@+id/textView22\"\r\n        tools:ignore=\"MissingConstraints\">\r\n\r\n    </androidx.appcompat.widget.AppCompatEditText>\r\n\r\n    <TextView\r\n        android:id=\"@+id/textView27\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_alignParentStart=\"true\"\r\n        android:layout_alignParentBottom=\"true\"\r\n        android:layout_marginTop=\"36dp\"\r\n        android:fontFamily=\"cursive\"\r\n        android:lineSpacingExtra=\"8sp\"\r\n        android:text=\"Mi Salud\"\r\n        android:textColor=\"#14734A\"\r\n        android:textSize=\"20sp\"\r\n        android:textStyle=\"bold\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintHorizontal_bias=\"0.049\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toBottomOf=\"@+id/textView26\" />\r\n\r\n    <TextView\r\n        android:id=\"@+id/textView28\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_alignParentStart=\"true\"\r\n        android:layout_alignParentBottom=\"true\"\r\n        android:layout_marginStart=\"16dp\"\r\n        android:layout_marginTop=\"12dp\"\r\n        android:fontFamily=\"sans-serif-condensed-medium\"\r\n        android:text=\"Estatura:\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toBottomOf=\"@+id/textView27\" />\r\n\r\n    <TextView\r\n        android:id=\"@+id/textView11\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_alignParentStart=\"true\"\r\n        android:layout_alignParentBottom=\"true\"\r\n        android:layout_marginStart=\"32dp\"\r\n        android:layout_marginTop=\"32dp\"\r\n        android:fontFamily=\"sans-serif-condensed-medium\"\r\n        android:text=\"Peso:\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toBottomOf=\"@+id/textView28\" />\r\n\r\n    <EditText\r\n        android:id=\"@+id/PesoET\"\r\n        android:layout_width=\"154dp\"\r\n        android:layout_height=\"34dp\"\r\n        android:ems=\"10\"\r\n        android:hint=\"Ingrese su peso en Kg\"\r\n        android:inputType=\"text\"\r\n        android:textSize=\"12sp\"\r\n        app:layout_constraintBaseline_toBaselineOf=\"@+id/textView11\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintHorizontal_bias=\"0.023\"\r\n        app:layout_constraintStart_toEndOf=\"@+id/textView28\" />\r\n\r\n    <EditText\r\n        android:id=\"@+id/AlergiasET\"\r\n        android:layout_width=\"197dp\"\r\n        android:layout_height=\"36dp\"\r\n        android:ems=\"10\"\r\n        android:hint=\"Ingrese las alergías que posee\"\r\n        android:inputType=\"text\"\r\n        android:textSize=\"12sp\"\r\n        app:layout_constraintBaseline_toBaselineOf=\"@+id/textView20\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintHorizontal_bias=\"0.029\"\r\n        app:layout_constraintStart_toEndOf=\"@+id/textView28\" />\r\n\r\n    <TextView\r\n        android:id=\"@+id/textView29\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_alignParentStart=\"true\"\r\n        android:layout_alignParentBottom=\"true\"\r\n        android:layout_marginStart=\"12dp\"\r\n        android:layout_marginTop=\"28dp\"\r\n        android:fontFamily=\"sans-serif-condensed-medium\"\r\n        android:text=\"Tipo de sangre:\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toBottomOf=\"@+id/textView20\" />\r\n\r\n    <EditText\r\n        android:id=\"@+id/TSangreET\"\r\n        android:layout_width=\"154dp\"\r\n        android:layout_height=\"34dp\"\r\n        android:ems=\"10\"\r\n        android:hint=\"Ingrese su tipo de sangre\"\r\n        android:inputType=\"text\"\r\n        android:textSize=\"12sp\"\r\n        app:layout_constraintBaseline_toBaselineOf=\"@+id/textView29\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintHorizontal_bias=\"0.191\"\r\n        app:layout_constraintStart_toEndOf=\"@+id/textView28\" />\r\n\r\n    <TextView\r\n        android:id=\"@+id/textView20\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_alignParentStart=\"true\"\r\n        android:layout_alignParentBottom=\"true\"\r\n        android:layout_marginStart=\"20dp\"\r\n        android:layout_marginTop=\"28dp\"\r\n        android:fontFamily=\"sans-serif-condensed-medium\"\r\n        android:text=\"Alergias:\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toBottomOf=\"@+id/textView11\" />\r\n\r\n    <EditText\r\n        android:id=\"@+id/EstaturaET\"\r\n        android:layout_width=\"154dp\"\r\n        android:layout_height=\"34dp\"\r\n        android:ems=\"10\"\r\n        android:hint=\"Ingrese su altura en cm\"\r\n        android:inputType=\"text\"\r\n        android:textSize=\"12sp\"\r\n        app:layout_constraintBaseline_toBaselineOf=\"@+id/textView28\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintHorizontal_bias=\"0.029\"\r\n        app:layout_constraintStart_toEndOf=\"@+id/textView28\" />\r\n\r\n    <androidx.appcompat.widget.AppCompatEditText\r\n        android:id=\"@+id/ApePatET\"\r\n        android:layout_width=\"263dp\"\r\n        android:layout_height=\"32dp\"\r\n        android:layout_marginEnd=\"8dp\"\r\n        android:fontFamily=\"sans-serif-light\"\r\n        android:hint=\"Ingrese su primer apellido\"\r\n        android:textSize=\"12sp\"\r\n        android:textStyle=\"bold\"\r\n        app:layout_constraintBaseline_toBaselineOf=\"@+id/textView23\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintHorizontal_bias=\"0.258\"\r\n        app:layout_constraintStart_toEndOf=\"@+id/textView23\"\r\n        tools:ignore=\"MissingConstraints\">\r\n\r\n    </androidx.appcompat.widget.AppCompatEditText>\r\n\r\n    <TextView\r\n        android:id=\"@+id/textView23\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_below=\"@+id/textView22\"\r\n        android:layout_alignParentStart=\"true\"\r\n        android:layout_marginStart=\"16dp\"\r\n        android:layout_marginTop=\"36dp\"\r\n        android:fontFamily=\"sans-serif-condensed-medium\"\r\n        android:text=\"Apellido Paterno:\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toBottomOf=\"@+id/textView22\" />\r\n\r\n    <Button\r\n        android:id=\"@+id/BtnActualizar\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_marginBottom=\"16dp\"\r\n        android:text=\"Actualizar\"\r\n        app:layout_constraintBottom_toBottomOf=\"parent\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintHorizontal_bias=\"0.5\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toBottomOf=\"@+id/TSangreET\"\r\n        app:layout_constraintVertical_bias=\"0.433\" />\r\n\r\n\r\n</androidx.constraintlayout.widget.ConstraintLayout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/fragment_profile2.xml b/app/src/main/res/layout/fragment_profile2.xml
+--- a/app/src/main/res/layout/fragment_profile2.xml	(revision 2fa4766e062652c946f08744d395af4b2ac0fb92)
++++ b/app/src/main/res/layout/fragment_profile2.xml	(date 1639557976445)
+@@ -32,6 +32,7 @@
+             android:textColor="#7ACFC7"
+             android:textSize="34sp"
+             android:textStyle="bold" />
++
+     </LinearLayout>
+ 
+     <ImageView
+@@ -352,5 +353,15 @@
+         app:layout_constraintTop_toBottomOf="@+id/TSangreET"
+         app:layout_constraintVertical_bias="0.433" />
+ 
++    <Button
++        android:id="@+id/btnsesion"
++        android:layout_width="93dp"
++        android:layout_height="34dp"
++        android:layout_weight="1"
++        android:text="@string/menu_sesion"
++        android:textSize="12sp"
++        tools:layout_editor_absoluteX="318dp"
++        tools:layout_editor_absoluteY="50dp" />
++
+ 
+ </androidx.constraintlayout.widget.ConstraintLayout>
+\ No newline at end of file
+Index: app/src/main/res/values/strings.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<resources>\r\n    <string name=\"app_name\">HealthCore</string>\r\n    <string name=\"title_activity_menu\">Menu</string>\r\n    <string name=\"navigation_drawer_open\">Open navigation drawer</string>\r\n    <string name=\"navigation_drawer_close\">Close navigation drawer</string>\r\n    <string name=\"nav_header_title\">Android Studio</string>\r\n    <string name=\"nav_header_subtitle\">android.studio@android.com</string>\r\n    <string name=\"nav_header_desc\">Navigation header</string>\r\n    <string name=\"action_settings\">Ajustes</string>\r\n    <string name=\"menu_profile\">Perfil</string>\r\n    <string name=\"menu_btn\">Boton de Emergencia</string>\r\n    <string name=\"menu_code\">Código QR</string>\r\n    <string name=\"menu_centers\">Centros Médicos</string>\r\n    <string name=\"menu_contact\">Contacto</string>\r\n    <string name=\"menu_help\">Ayuda</string>\r\n    <string name=\"menu_rate\">Calificanos</string>\r\n    <string name=\"hello_blank_fragment\">Hello blank fragment</string>\r\n    <string name=\"menu_username\">Nombre de Usuario</string>\r\n    <string name=\"menu_email\">Correo</string>\r\n    <string name=\"Titulo_Codigo_QR\">Código QR</string>\r\n    <string name=\"Codigo_QR_Aviso\">Tu código QR es personal, no lo compartas con nadie que no sea tu familia o el personal médico calificado.</string>\r\n    <string name=\"txt_boton_codigo_qr\">Compartir</string>\r\n    <string name=\"txt_emergency_button\">¡Botón de emergencia!</string>\r\n    <string name=\"title_activity_contacto\">Contacto</string>\r\n    <string name=\"title_home\">Home</string>\r\n    <string name=\"title_dashboard\">Dashboard</string>\r\n    <string name=\"title_notifications\">Notifications</string>\r\n    <string name=\"jesus_nombre\">Jesús Rangel Díaz</string>\r\n    <string name=\"jesus_correo\">jesusrangeldiaz155@gmail.com</string>\r\n    <string name=\"ximena_nombre\">Ximena Velasco Vázquez</string>\r\n    <string name=\"ximena_correo\">adm15velascoximena@gmail.com</string>\r\n    <string name=\"alan_nombre\">Sergio Alan Salinas Rodríguez</string>\r\n    <string name=\"alan_correo\">alansalinas25@gmail.com</string>\r\n    <string name=\"karen_nombre\">Karen Jazmín Suárez Ríos</string>\r\n    <string name=\"karen_correo\">jazminsuari@gmail.com</string>\r\n    <string name=\"valoracion_titulo\">¡Valora nuestra App!</string>\r\n    <string name=\"valoracion_comentario\">Escribe un comentario...</string>\r\n    <string name=\"btn_enviar_valoracion\">ENVIAR</string>\r\n    <string name=\"nombre_paciente_perfil\">Cristian Salas</string>\r\n    <string name=\"enfermedad_cronica_perfil\">Diábetes Crónica</string>\r\n    <string name=\"num_operaciones_perfil\">2 Operaciones</string>\r\n    <string name=\"ultima_revision_perfil\">Última Revisión</string>\r\n    <string name=\"hacer_pregunta\">Realiza una pregunta...</string>\r\n    <string name=\"btn_enviar_pregunta\">ENVIAR</string>\r\n    <string name=\"scan\">Escanear</string>\r\n    <string-array name=\"Preguntas\">\r\n        <item>¿Cómo usar la app en una situación de emergencia?</item>\r\n        <item>¿Para qué funciona el Código QR?</item>\r\n        <item>¿Cómo realizo mi expediente médico?</item>\r\n        <item>¿Cómo se relaciona la app con mi centro de salud?</item>\r\n        <item>¿Puedo consultar información con algún médico?</item>\r\n    </string-array>\r\n    <string-array name=\"Respuesta1\">\r\n        <item>Si presentas una emergencia y previamente haz llenado tu correspondiente expediente médico, solo basta con estar en pantalla de inicio, presionar el botón rojo de emergencia, verificar tu situación y automáticamente se envía una notificación al centro de salud más cercano, otorgando el servicio de ambulancia a la dirección ingresada</item>\r\n    </string-array>\r\n    <string-array name=\"Respuesta2\">\r\n        <item>El código QR permite almacenar tu información médica, en caso de que presentes un accidente, este puede ser escaneado por alguien más para brindarte servicios de forma más rápida y eficaz</item>\r\n    </string-array>\r\n    <string-array name=\"Respuesta3\">\r\n        <item>En el apartado de tu perfil, podrás modificar tu expediente contestando las preguntas disponibles</item>\r\n    </string-array>\r\n    <string-array name=\"Respuesta4\">\r\n        <item>Al presionar el botón de emergencia que tienes disponible en la app, este manda una alerta a tu centro de salud, permitiendo brindarte servicio de ambulancia para que tu caso pueda ser atendido rápidamente</item>\r\n    </string-array>\r\n    <string-array name=\"Respuesta5\">\r\n        <item>La app no está enfocada en brindarte servicio directo con algún médico en particular, sino que permite mejorar las emergencias en los centros de salud y sociedad</item>\r\n    </string-array>\r\n    <string name=\"textViewPreguntas\">Preguntas más frecuentes de la app</string>\r\n    <string name=\"textViewRespuestas\">Respuestas</string>\r\n\r\n</resources>\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/values/strings.xml b/app/src/main/res/values/strings.xml
+--- a/app/src/main/res/values/strings.xml	(revision 2fa4766e062652c946f08744d395af4b2ac0fb92)
++++ b/app/src/main/res/values/strings.xml	(date 1639557977912)
+@@ -68,5 +68,6 @@
+     </string-array>
+     <string name="textViewPreguntas">Preguntas más frecuentes de la app</string>
+     <string name="textViewRespuestas">Respuestas</string>
++    <string name="menu_sesion">Cuenta</string>
+ 
+ </resources>
+Index: app/src/main/java/com/example/registration/ui/ProfileFragment2.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.registration.ui;\r\n\r\nimport android.os.Bundle;\r\nimport android.provider.ContactsContract;\r\nimport android.view.LayoutInflater;\r\nimport android.view.View;\r\nimport android.view.ViewGroup;\r\nimport android.widget.Button;\r\nimport android.widget.EditText;\r\nimport android.widget.Switch;\r\nimport android.widget.Toast;\r\n\r\nimport androidx.annotation.NonNull;\r\nimport androidx.annotation.Nullable;\r\nimport androidx.fragment.app.Fragment;\r\n\r\nimport com.example.registration.PerfilFirebase;\r\nimport com.example.registration.R;\r\nimport com.google.firebase.auth.FirebaseAuth;\r\nimport com.google.firebase.auth.FirebaseUser;\r\nimport com.google.firebase.database.DataSnapshot;\r\nimport com.google.firebase.database.DatabaseError;\r\nimport com.google.firebase.database.DatabaseException;\r\nimport com.google.firebase.database.DatabaseReference;\r\nimport com.google.firebase.database.FirebaseDatabase;\r\nimport com.google.firebase.database.ValueEventListener;\r\n\r\n\r\npublic class ProfileFragment2 extends Fragment {\r\n\r\n    DatabaseReference reference,reference2;\r\n    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();\r\n    EditText NombreET,ApePatET,ApeMatET,AgeET, EstaturaET,PesoET,AlergiaET,SangreET, SexoET;\r\n    Button submit;\r\n\r\n    //Datos de sesión activa\r\n    String UID = user.getUid();\r\n\r\n\r\n\r\n    @Nullable\r\n    @Override\r\n    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {\r\n        View view= inflater.inflate(R.layout.fragment_profile2, container, false);\r\n\r\n        SexoET = (EditText) view.findViewById(R.id.SexoET);\r\n\r\n        NombreET= (EditText) view.findViewById(R.id.NombreET);\r\n        ApePatET= (EditText) view.findViewById(R.id.ApePatET);\r\n        ApeMatET= (EditText) view.findViewById(R.id.ApeMatET);\r\n        AgeET= (EditText) view.findViewById(R.id.AgeET);\r\n\r\n        EstaturaET= (EditText) view.findViewById(R.id.EstaturaET);\r\n        PesoET= (EditText) view.findViewById(R.id.PesoET);\r\n        AlergiaET= (EditText) view.findViewById(R.id.AlergiasET);\r\n        SangreET= (EditText) view.findViewById(R.id.TSangreET);\r\n\r\n        submit = (Button) view.findViewById(R.id.BtnActualizar);\r\n\r\n        reference= FirebaseDatabase.getInstance().getReference().child(\"ProfileFirebase\");\r\n\r\n        reference.child(UID).addValueEventListener(new ValueEventListener() {\r\n            @Override\r\n            public void onDataChange(@NonNull DataSnapshot snapshot) {\r\n                if(snapshot.exists()){\r\n                    try{\r\n                        NombreET.setText(\" \"+ snapshot.child(\"nombre\").getValue().toString());\r\n                        ApePatET.setText(\" \"+ snapshot.child(\"apePat\").getValue().toString());\r\n                        ApeMatET.setText(\" \"+ snapshot.child(\"apeMat\").getValue().toString());\r\n                        AgeET.setText(\" \"+snapshot.child(\"edad\").getValue().toString());\r\n                        SexoET.setText(\" \"+snapshot.child(\"sexo\").getValue().toString());\r\n\r\n                        EstaturaET.setText(\" \"+snapshot.child(\"estatura\").getValue().toString());\r\n                        PesoET.setText(\" \"+snapshot.child(\"peso\").getValue().toString());\r\n                        AlergiaET.setText(\" \"+snapshot.child(\"alergias\").getValue().toString());\r\n                        SangreET.setText(\" \"+snapshot.child(\"tsangre\").getValue().toString());\r\n                    }catch (DatabaseException e){\r\n                        Toast.makeText(getActivity(), (\"Error: \"+e.getMessage()), Toast.LENGTH_SHORT).show();\r\n                    }\r\n                }\r\n            }\r\n\r\n            @Override\r\n            public void onCancelled(@NonNull DatabaseError error) {\r\n\r\n            }\r\n        });\r\n\r\n        submit.setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View view) {\r\n                PerfilFirebase PF=new PerfilFirebase();\r\n                PF.setNombre(NombreET.getText().toString().trim());\r\n                PF.setApePat(ApePatET.getText().toString().trim());\r\n                PF.setApeMat(ApeMatET.getText().toString().trim());\r\n                PF.setEdad(AgeET.getText().toString().trim());\r\n                PF.setSexo(SexoET.getText().toString().trim());\r\n\r\n                PF.setEstatura(EstaturaET.getText().toString().trim());\r\n                PF.setPeso(PesoET.getText().toString().trim());\r\n                PF.setAlergias(AlergiaET.getText().toString().trim());\r\n                PF.setTSangre(SangreET.getText().toString().trim());\r\n\r\n                try{\r\n                    reference2= FirebaseDatabase.getInstance().getReference().child(\"ProfileFirebase\");\r\n                    reference2.child(UID).setValue(PF);\r\n                    Toast.makeText(getActivity(),\"Tus datos han sido actualizados.\",Toast.LENGTH_SHORT).show();\r\n                }catch (DatabaseException e){\r\n                    Toast.makeText(getActivity(), (\"Error: \"+e.getMessage()), Toast.LENGTH_SHORT).show();\r\n                }\r\n            }\r\n        });\r\n\r\n        return view;\r\n    }\r\n\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/registration/ui/ProfileFragment2.java b/app/src/main/java/com/example/registration/ui/ProfileFragment2.java
+--- a/app/src/main/java/com/example/registration/ui/ProfileFragment2.java	(revision 2fa4766e062652c946f08744d395af4b2ac0fb92)
++++ b/app/src/main/java/com/example/registration/ui/ProfileFragment2.java	(date 1639559301413)
+@@ -1,5 +1,7 @@
+ package com.example.registration.ui;
+ 
++import android.content.Intent;
++import android.net.Uri;
+ import android.os.Bundle;
+ import android.provider.ContactsContract;
+ import android.view.LayoutInflater;
+@@ -7,6 +9,7 @@
+ import android.view.ViewGroup;
+ import android.widget.Button;
+ import android.widget.EditText;
++import android.widget.ImageButton;
+ import android.widget.Switch;
+ import android.widget.Toast;
+ 
+@@ -14,6 +17,7 @@
+ import androidx.annotation.Nullable;
+ import androidx.fragment.app.Fragment;
+ 
++import com.example.registration.MainActivity;
+ import com.example.registration.PerfilFirebase;
+ import com.example.registration.R;
+ import com.google.firebase.auth.FirebaseAuth;

@@ -18,6 +18,8 @@
             android:title="@string/menu_help"/>
         <item android:id="@+id/nav_rate"
             android:title="@string/menu_rate"/>
+        <item android:id="@+id/nav_sesion"
+            android:title="@string/menu_sesion"/>
     </group>
 
 </menu>

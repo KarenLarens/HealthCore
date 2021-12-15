@@ -2,42 +2,110 @@ package com.example.registration;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.MotionEvent;
+import android.view.View;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Toast;
+import android.widget.Button;
+import android.view.GestureDetector;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.widget.Toolbar;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+
+import com.example.registration.ui.CentersFragment;
 import com.example.registration.ui.CodeFragment;
 import com.example.registration.ui.ContactFragment;
 import com.example.registration.ui.HelpFragment;
 import com.example.registration.ui.ProfileFragment;
 import com.example.registration.ui.RateFragment;
 import com.google.android.material.navigation.NavigationView;
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
 import com.example.registration.ui.ProfileFragment2;
 
-public class MenuActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class MenuActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, GestureDetector.OnGestureListener, GestureDetector.OnDoubleTapListener {
 
     private static final int REQUEST_PERMISSION_CALL =100;
     private static final int REQUEST_PERMISSION_LOCATION =100;
     private DrawerLayout drawer;
+    private GestureDetector gestureDetector;
+    Button btn_emer;
 
+    @Override
+    public boolean onSingleTapConfirmed(MotionEvent motionEvent) {
+        return false;
+    }
+
+    @Override
+    public boolean onDoubleTap(MotionEvent motionEvent) {
+        Intent intent = new Intent(MenuActivity.this, loginActivity.class);
+        startActivity(intent);
+        return false;
+    }
+
+    @Override
+    public boolean onDoubleTapEvent(MotionEvent motionEvent) {
+        return false;
+    }
+
+    @Override
+    public boolean onDown(MotionEvent motionEvent) {
+        return false;
+    }
+
+    @Override
+    public void onShowPress(MotionEvent motionEvent) {
+
+    }
+
+    @Override
+    public boolean onSingleTapUp(MotionEvent motionEvent) {
+        return false;
+    }
+
+    @Override
+    public boolean onScroll(MotionEvent motionEvent, MotionEvent motionEvent1, float v, float v1) {
+        return false;
+    }
+
+    @Override
+    public void onLongPress(MotionEvent motionEvent) {
+        Intent intent = new Intent(MenuActivity.this, loginActivity.class);
+        startActivity(intent);
+    }
+
+    @Override
+    public boolean onFling(MotionEvent motionEvent, MotionEvent motionEvent1, float v, float v1) {
+        return false;
+    }
+
+    @Override
+    public void onPointerCaptureChanged(boolean hasCapture) {
+
+    }
 
     @SuppressLint("WrongViewCast")
     @Override
-
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.menu);
+
+        this.gestureDetector = new GestureDetector(this, this);
+        gestureDetector.setOnDoubleTapListener(this);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -56,6 +124,7 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
                     new ProfileFragment()).commit();
             navigationView.setCheckedItem(R.id.nav_profile);
         }
+
     }
 
     @Override
@@ -103,6 +172,10 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                         new RateFragment()).commit();
                 break;
+            case R.id.nav_sesion:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                        new CentersFragment()).commit();
+                break;
         }
 
         drawer.closeDrawer(GravityCompat.START);
@@ -123,6 +196,8 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
     }
+
+
 }
 
 

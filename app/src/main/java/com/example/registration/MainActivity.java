@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
         userID.setText(user.getUid());
         ///obtener data
         Bundle data= this.getIntent().getExtras();
-        password= data.getString(password);
+        password = data.getString(password);
 
 
         //cargar imágen con glide:

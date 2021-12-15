@@ -3,18 +3,20 @@ package com.example.registration;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
-
+import android.view.GestureDetector;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.registration.ui.ContactFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
@@ -24,12 +26,69 @@ import com.google.firebase.auth.FirebaseUser;
 
 import static java.lang.Thread.sleep;
 
-public class loginActivity extends AppCompatActivity {
+public class loginActivity extends AppCompatActivity implements GestureDetector.OnGestureListener, GestureDetector.OnDoubleTapListener{
+    @Override
+    public boolean onSingleTapConfirmed(MotionEvent motionEvent) {
+        return false;
+    }
+
+    @Override
+    public boolean onDoubleTap(MotionEvent motionEvent) {
+        Intent intent = new Intent(loginActivity.this, RegisterActivity.class);
+        startActivity(intent);
+        return false;
+    }
+
+    @Override
+    public boolean onDoubleTapEvent(MotionEvent motionEvent) {
+        Intent intent = new Intent(loginActivity.this, ContactFragment.class);
+        startActivity(intent);
+        return false;
+    }
+
+    @Override
+    public boolean onDown(MotionEvent motionEvent) {
+        return false;
+    }
+
+    @Override
+    public void onShowPress(MotionEvent motionEvent) {
+
+    }
+
+    @Override
+    public boolean onSingleTapUp(MotionEvent motionEvent) {
+        return false;
+    }
+
+    @Override
+    public boolean onScroll(MotionEvent motionEvent, MotionEvent motionEvent1, float v, float v1) {
+        Intent intent = new Intent(loginActivity.this, ContactFragment.class);
+        startActivity(intent);
+        return false;
+    }
+
+    @Override
+    public void onLongPress(MotionEvent motionEvent) {
+        Intent intent = new Intent(loginActivity.this, RegisterActivity.class);
+        startActivity(intent);
+    }
+
+    @Override
+    public boolean onFling(MotionEvent motionEvent, MotionEvent motionEvent1, float v, float v1) {
+        return false;
+    }
+
+    @Override
+    public void onPointerCaptureChanged(boolean hasCapture) {
+
+    }
 
     TextView lblCrearCuenta;
     EditText txtInputEmail, txtInputPassword;
     Button btnLogin;
     FirebaseAuth mAuth;
+    private GestureDetector gestureDetector;
     public static String correo;
 
     private ProgressDialog mProgressBar;
@@ -45,6 +104,8 @@ public class loginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         //AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
         setContentView(R.layout.activity_login);
+        this.gestureDetector = new GestureDetector(this, this);
+        gestureDetector.setOnDoubleTapListener(this);
         txtInputEmail = findViewById(R.id.inputEmail);
         txtInputPassword = findViewById(R.id.inputPassword);
         btnLogin = findViewById(R.id.btnlogin);
